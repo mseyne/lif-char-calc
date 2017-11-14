@@ -11,9 +11,8 @@
 </head>
 <body>
     <div id="app" class="container">
-        <h1 class="text-center">Planification de Personnage</h1>
-        <h2 class="text-center"> <small class="text-muted">Life is Feudal MMO</small></h2>
-        <ul class="nav nav-tabs">
+        <!-- NAV BAR FIXED TOP -->
+        <ul class="nav nav-tabs fixed-top navbar-light bg-light pt-2 justify-content-center">
             <li class="nav-item">
                 <a class="nav-link" v-bind:class="{active:p.crafting.active}" v-on:click="changePage(p.crafting)" href="#">{{ p.crafting.fr }} : {{ p.crafting.now }}/{{ p.crafting.max }}</a>
             </li>
@@ -33,7 +32,14 @@
                 <em>(Passez la souris sur les boutons info)</em>
             </li>
         </ul>
+
+        <!-- APP TITLE -->
         <div class="mb-0 pb-0 jumbotron">
+        <h1 class="text-center">Planification de Personnage</h1>
+        <h2 class="text-center"> <small class="text-muted">Life is Feudal MMO</small></h2>
+        <hr>
+
+        <!-- CRAFTING SECTION -->
         <section id="crafting" v-if="p.crafting.active">
             <!-- TIER 1 Loop -->
             <div v-for="card in cards.crafting">
@@ -56,7 +62,7 @@
                 <div v-for="card2 in card.tier2">
                     <div class="row">
                         <div class="col-1"></div>
-                        <div class="col-11 col-offset-2">
+                        <div class="col-11">
                             <div class="card mt-4" style="width: 12rem;" >
                                 <div class="card-body">
                                     <span class="badge badge-dark">Tier II</span>
@@ -76,7 +82,7 @@
                     <div v-for="card3 in card2.tier3">
                         <div class="row">
                             <div class="col-2"></div>
-                            <div class="col-10 col-offset-2">
+                            <div class="col-10">
                                 <div class="card mt-4" style="width: 12rem;" >
                                     <div class="card-body">
                                         <span class="badge badge-dark">Tier III</span>
@@ -93,10 +99,10 @@
                             </div>
                         </div>
                         <!-- TIER 4 Loop -->
-                        <div v-for="card4 in card3.tier4">
-                            <div class="row">
-                                <div class="col-2"></div>
-                                <div class="col-10 col-offset-2">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div v-for="card4 in card3.tier4">
+                                <div class="col-9">
                                     <div class="card mt-4" style="width: 12rem;" >
                                         <div class="card-body">
                                             <span class="badge badge-dark">Tier IV</span>
@@ -122,24 +128,123 @@
             </div>
             <!-- End Loop TIER 1 -->
         </section>
+
+        <!-- COMBAT SECTION -->
         <section id="combat" v-if="p.combat.active">
-                <h2 class="display-3">{{ p.combat.fr }}</h2>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <!-- SECONDARY COMBAT SKILLS -->
+            <div class="row">
+                <div v-for="card in cards.secondCombat">
+                    <div class="col">
+                        <div class="card mb-2" style="width: 12rem;">
+                            <div class="card-body">
+                                <img class="rounded  mx-auto d-block mb-2" v-bind:src="card.img" alt="Card image cap">
+                                <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
+                                <form>
+                                    <div class="form-group d-flex justify-content-center">
+                                        <input class="form-control" type="number" class="form-check-input" v-bind:value="card.now">
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr></hr>
+            <!-- TIER 1 Loop -->
+            <div v-for="card in cards.combat">
+                <div class="card" style="width: 12rem;">
+                    <div class="card-body">
+                        <span class="badge badge-dark">Tier I</span>
+                        <img class="rounded  mx-auto d-block mb-2" v-bind:src="card.img" alt="Card image cap">
+                        <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
+                        <form>
+                            <div class="form-group d-flex justify-content-center">
+                                <input class="form-control" type="number" class="form-check-input" v-bind:value="card.now">
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- TIER 2 Loop -->
+                <div v-for="card2 in card.tier2">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-11">
+                            <div class="card mt-4" style="width: 12rem;" >
+                                <div class="card-body">
+                                    <span class="badge badge-dark">Tier II</span>
+                                    <img class="rounded  mx-auto d-block mb-2" v-bind:src="card2.img" alt="Card image cap">
+                                    <h5 class="card-title text-center"> <a v-bind:href="card2.wiki"> {{card2.fr}} </a></h5>
+                                    <div class="form-group d-flex justify-content-center">
+                                        <input class="form-control" type="number" class="form-check-input" v-bind:value="card2.now">
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card2.info">info</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- TIER 3 Loop -->
+                    <div v-for="card3 in card2.tier3">
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-10">
+                                <div class="card mt-4" style="width: 12rem;" >
+                                    <div class="card-body">
+                                        <span class="badge badge-dark">Tier III</span>
+                                        <img class="rounded  mx-auto d-block mb-2" v-bind:src="card3.img" alt="Card image cap">
+                                        <h5 class="card-title text-center"> <a v-bind:href="card3.wiki"> {{card3.fr}} </a></h5>
+                                        <div class="form-group d-flex justify-content-center">
+                                            <input class="form-control" type="number" class="form-check-input" v-bind:value="card3.now">
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card3.info">info</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Loop TIER 3 -->
+                </div>
+                <!-- End Loop TIER 2 -->
                 <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </div>
+            <!-- End Loop TIER 1 -->
                 </p>
         </section>
+        
+        <!-- MINOR SECTION -->
         <section id="minor" v-if="p.minor.active">
-                <h2 class="display-3">{{ p.minor.fr }}</h2>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                </p>
+                <div class="row">
+                    <div v-for="card in cards.minor">
+                        <div class="col">
+                            <div class="card mb-4" style="width: 12rem;">
+                                <div class="card-body">
+                                    <img class="rounded  mx-auto d-block mb-2" v-bind:src="card.img" alt="Card image cap">
+                                    <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
+                                    <form>
+                                        <div class="form-group d-flex justify-content-center">
+                                            <input class="form-control" type="number" class="form-check-input" v-bind:value="card.now">
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </section>
+
+        <!-- STATISTICS SECTION -->
         <section id="stats" v-if="p.stats.active">
                 <h2 class="display-3">{{ p.stats.fr }}</h2>
                 <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -149,6 +254,8 @@
                     <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                 </p>
         </section>
+
+        <!-- SUMMARY SECTION -->
         <section id="summary" v-if="p.summary.active">
                 <h2 class="display-3">{{ p.summary.fr }}</h2>
                 <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -159,7 +266,8 @@
                 </p>
         </section>
         
-        <p class="text-muted text-center">Made with <3 by MSeyne - Source: Github - GPL Licence Libre</p>
+        <!-- FOOTER -->
+        <p class="m-0 pb-3 text-muted text-center"><small>Made with <span class="text-danger">&lt;3</span> by MSeyne - Source: Github - GPL Licence Libre</small></p>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

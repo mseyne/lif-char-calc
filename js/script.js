@@ -13,8 +13,10 @@ var app = new Vue({
             summary: {fr: "Résumé", active:false},
         },
         cards:{
+            // CRAFTING CARD DATA
             crafting: { 
                 artisan:{ 
+                    id:1,
                     fr:"Artisanat", 
                     img:"./assets/crafting/Artisan.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Artisanat",
@@ -25,11 +27,12 @@ var app = new Vue({
                     <p><b>30</b>: Vous pouvez aplanir le terrain. Vous pouvez déraciner les souches.</p>\
                     <p><b>60</b>: Vous pouvez abattre les arbres de bois dur deux fois plus vite.</p>\
                     <p><b>90</b>: Vous pouvez trouver des ingrédients rares dans les arbres (1%).</p>\
-                    <p><b>100</b>: Légère augmentation des chances de trouver des ingrédients rares dans les arbres (1,5%).",
+                    <p><b>100</b>: Légère augmentation des chances de trouver des ingrédients rares dans les arbres (1,5%).</p>",
                     now:0,
                     max:100,
                     tier2: {
                         carpentry: { 
+                            id:8,
                             fr: "Menuiserie",
                             img:"./assets/crafting/Carpentry.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Menuiserie",
@@ -44,6 +47,7 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 bowcraft: {
+                                    id:9,
                                     fr: "Fabrication d'arc",
                                     img:"./assets/crafting/Bowcraft.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Fabrication_d%27arc",
@@ -57,17 +61,18 @@ var app = new Vue({
                                     now:0,
                                     max:100,
                                     tier4:{
-                                        bowcraft: {
-                                            fr: "Fabrication d'arc",
-                                            img:"./assets/crafting/Bowcraft.png",
-                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Fabrication_d%27arc",
-                                            info:"<h3 class='text-center'>Fabrication d'arc</h3>\
-                                            </p><b>Tout niveau</b>: Qualité maximale de production des arcs et arbalètes.</p>\
-                                            </p><b>0</b>: Vous pouvez fabriquer des carreaux et des flèches ordinaires.</p>\
-                                            </p><b>30</b>: Vous pouvez fabriquer des arcs et arbalètes ordinaires.</p>\
-                                            </p><b>60</b>: Vous pouvez fabriquer des arcs, arbalètes et munitions avancées.</p>\
-                                            </p><b>90</b>: Vous pouvez fabriquer des armes exceptionnelles (qualité augmentée de 20% et nom unique) (0,01% chance).</p>\
-                                            </p><b>100</b>: Vous pouvez fabriquer des armes exceptionnelles (qualité augmentée de 20% et nom unique) (0,011% chance).</p>",
+                                        warfare: {
+                                            id:10,
+                                            fr: "Ingénierie de siège",
+                                            img:"./assets/crafting/Warfare.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Ing%C3%A9nierie_de_si%C3%A8ge",
+                                            info:"<h3 class='text-center'>Ingénierie de siège</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximum des objets de guerre.</p>\
+                                            </p><b>0</b>: Vous pouvez fabriquer des Petit kits de siège. Vous pouvez fabriquer des munitions au naphta.</p>\
+                                            </p><b>30</b>: Vous pouvez fabriquer des kits de siège moyens.</p>\
+                                            </p><b>60</b>: Vous pouvez fabriquer de grands kits de siège. Vous pouvez déployer les charges de sapeur.</p>\
+                                            </p><b>90</b>: Vous pouvez fabriquer des explosifs.</p>\
+                                            </p><b>100</b>: Bonus constant de 5% à la chance lors de l'utilisation de l’ingénierie de siège.</p>",
                                             now:0,
                                             max:100
                                         }
@@ -76,6 +81,7 @@ var app = new Vue({
                             }
                         }, 
                         construction: {
+                            id:18,
                             fr: "Construction",
                             img:"./assets/crafting/Construction.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Construction",
@@ -89,7 +95,8 @@ var app = new Vue({
                             now:0,
                             max:100,
                             tier3:{
-                                mining: {
+                                masonry: {
+                                    id:19,
                                     fr: "Maçonnerie",
                                     img:"./assets/crafting/Masonry.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Ma%C3%A7onnerie",
@@ -102,11 +109,43 @@ var app = new Vue({
                                     </p><b>100</b>: Vous pouvez ériger drapeaux et bannières.</p>",
                                     now:0,
                                     max:100,
-                                    tier4:{}
+                                    tier4:{
+                                        architecture: {
+                                            id:20,
+                                            fr: "Architecture",
+                                            img:"./assets/crafting/Architecture.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Architecture",
+                                            info:"<h3 class='text-center'>Architecture</h3>\
+                                            </p><b>Tout niveau</b>: Qualité et la durabilité des bâtiments érigés.</p>\
+                                            </p><b>0</b>: Vous pouvez construire des murs du château (10m). Vous pouvez agir comme contremaître pendant les travaux de constructions (crier sur les gens).</p>\
+                                            </p><b>30</b>: Vous pouvez construire des tours et des murs de château avec hourd.</p>\
+                                            </p><b>60</b>: Vous pouvez construire plus de fortifications de château et plusieurs bâtiments améliorés.</p>\
+                                            </p><b>90</b>: Vous pouvez construire un donjon de château.</p>\
+                                            </p><b>100</b>: Vous pouvez construire des fontaines.</p>",
+                                            now:0,
+                                            max:100
+                                        },
+                                        building: {
+                                            id:7,
+                                            fr: "Maintenance des bâtiments",
+                                            img:"./assets/crafting/Building.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Maintenance_des_b%C3%A2timents",
+                                            info:"<h3 class='text-center'>Maintenance des bâtiments</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximale des kits de réparation fabriqués et des actions de maintenance des bâtiments.</p>\
+                                            </p><b>0</b>: Vous pouvez fabriquer des petits kits de réparation. Vous pouvez réparer des bâtiments.</p>\
+                                            </p><b>30</b>: Vous pouvez fabriquer des kits moyens de réparation.</p>\
+                                            </p><b>60</b>: 	Vous pouvez fabriquer de grands kits de réparation</p>\
+                                            </p><b>90</b>: Augmente un peu la vitesse de réparation.</p>\
+                                            </p><b>100</b>: Qualité maximale des kits de réparation fabriqués et des actions de maintenance des bâtiments.</p>",
+                                            now:0,
+                                            max:100
+                                        }
+                                    }
                                 }
                             }
                         }, 
                         digging: {
+                            id: 16,
                             fr: "Forage",
                             img:"./assets/crafting/Digging.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Forage",
@@ -120,9 +159,10 @@ var app = new Vue({
                             now:0,
                             max:100,
                             tier3:{
-                                smelting: {
+                                mining: {
+                                    id: 2,
                                     fr: "Minage",
-                                    img:"./assets/crafting/Bowcraft.png",
+                                    img:"./assets/crafting/Mining.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Minage",
                                     info:"<h3 class='text-center'>Minage</h3>\
                                     </p><b>Tout niveau</b>: Vitesse d'extraction du minerai.</p>\
@@ -133,11 +173,43 @@ var app = new Vue({
                                     </p><b>100</b>: Chance légèrement augmentée de trouver des ingrédients rares dans le minerai (1,5% par action unique).</p>",
                                     now:0,
                                     max:100,
-                                    tier4:{}
+                                    tier4:{
+                                        prospecting: {
+                                            id:31,
+                                            fr: "Prospection des éléments précieux",
+                                            img:"./assets/crafting/Prospecting.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Prospection_des_%C3%A9l%C3%A9ments_pr%C3%A9cieux",
+                                            info:"<h3 class='text-center'>Prospection des éléments précieux</h3>\
+                                            </p><b>Tout niveau</b>: Vitesse d'extraction du minerai. Vitesse et portée de prospection des minéraux.</p>\
+                                            </p><b>0</b>: Vous pouvez sonder les murs de tunnel.</p>\
+                                            </p><b>30</b>: Portée de prospection des minéraux légèrement augmenté.</p>\
+                                            </p><b>60</b>: Vous pouvez prospecter du minerai d'argent. Distance de prospection étendue.</p>\
+                                            </p><b>90</b>: Vous pouvez prospecter du minerai d'or. Distance de prospection étendue.</p>\
+                                            </p><b>100</b>: Distance de prospection légèrement augmentée.</p>",
+                                            now:0,
+                                            max:100
+                                        },
+                                        jewelry: {
+                                            id:52,
+                                            fr: "Bijouterie",
+                                            img:"./assets/crafting/Jewelry.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Bijouterie",
+                                            info:"<h3 class='text-center'>Bijouterie</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximale des bijoux fabriqués. La qualité des bijoux affecte le bonus de chance reçu par le joueur qui le porte.</p>\
+                                            </p><b>0</b>: Vous pouvez fabriquer des anneaux simples.</p>\
+                                            </p><b>30</b>: Vous pouvez fabriquer des anneaux et des amulettes.</p>\
+                                            </p><b>60</b>: Vous pouvez fabriquer des bijoux simples incrustés de pierres précieuses.</p>\
+                                            </p><b>90</b>: Vous pouvez fabriquer des bijoux complexes avec plusieurs métaux et pierres précieuses. Vous pouvez fabriquer des bijoux exceptionnels (+20%% en qualité et nom unique) (0,01%% de chances).</p>\
+                                            </p><b>100</b>: Vous pouvez fabriquer des bijoux exceptionnels (+20%% en qualité et nom unique) (0,011%% de chances).</p>",
+                                            now:0,
+                                            max:100
+                                        }
+                                    }
                                 }
                             }
                         }, 
                         materials: {
+                            id: 17,
                             fr: "Préparation de matériaux",
                             img:"./assets/crafting/Materials.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Pr%C3%A9paration_de_mat%C3%A9riaux",
@@ -151,9 +223,10 @@ var app = new Vue({
                             now:0,
                             max:100,
                             tier3:{
-                                masonry: {
+                                smelting: {
+                                    id: 3,
                                     fr: "Fonte",
-                                    img:"./assets/crafting/Masonry.png",
+                                    img:"./assets/crafting/Smelting.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Fonte",
                                     info:"<h3 class='text-center'>Fonte</h3>\
                                     </p><b>Tout niveau</b>: Qualité maximale du métal produit.</p>\
@@ -164,13 +237,45 @@ var app = new Vue({
                                     </p><b>100</b>: Moins de perte de matériaux durant le recyclage des armes métalliques.</p>",
                                     now:0,
                                     max:100,
-                                    tier4:{}
+                                    tier4:{
+                                        forging: {
+                                            id:4,
+                                            fr: "Forge",
+                                            img:"./assets/crafting/Forging.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Forge",
+                                            info:"<h3 class='text-center'>Forge</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximale des armes produites.</p>\
+                                            </p><b>0</b>: Vous pouvez fabriquer des objets ménagers.</p>\
+                                            </p><b>30</b>: Vous pouvez fabriquer des armes en fer.</p>\
+                                            </p><b>60</b>: Vous pouvez fabriquer des armes en acier.</p>\
+                                            </p><b>90</b>: Vous pouvez fabriquer des armes exceptionnelles (qualité augmentée de 20%% et nom unique) (0,01%% chance) et forger des armes en acier Vostaskus.</p>\
+                                            </p><b>100</b>: Vous pouvez fabriquer des armes exceptionnelles (qualité augmentée de 20%% et nom unique) (0,011%% chance).</p>",
+                                            now:0,
+                                            max:100
+                                        },
+                                        armorsmithing: {
+                                            id:5,
+                                            fr: "Forge d'armure",
+                                            img:"./assets/crafting/Armorsmithing.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Forge_d%27armure",
+                                            info:"<h3 class='text-center'>Forge d'armure</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximale des armures produites.</p>\
+                                            </p><b>0</b>: Vous pouvez fabriquer une armure ordinaire.</p>\
+                                            </p><b>30</b>: Vous pouvez fabriquer des armures pour chevaux.</p>\
+                                            </p><b>60</b>: Vous pouvez fabriquer des armures avancées.</p>\
+                                            </p><b>90</b>: 	Permet de fabriquer des armures exceptionnelles (qualité augmentée de 20%% et un nom unique) (0, 01%% chance).</p>\
+                                            </p><b>100</b>: Vous pouvez fabriquer des armures royales.</p>",
+                                            now:0,
+                                            max:100
+                                        }
+                                    }
                                 }
                             }
                         }
                     } 
                 }, 
                 nature:{
+                    id:11,
                     fr:"Connaissance de la nature", 
                     img:"./assets/crafting/Nature.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Connaissance_de_la_nature",
@@ -191,6 +296,7 @@ var app = new Vue({
                     max:100,
                     tier2: {
                         herbalism: { 
+                            id:12,
                             fr: "Herboristerie",
                             img:"./assets/crafting/Herbalism.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Herboristerie",
@@ -205,6 +311,7 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 healing: {
+                                    id:14,
                                     fr: "Soins",
                                     img:"./assets/crafting/Healing.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Soins",
@@ -217,9 +324,26 @@ var app = new Vue({
                                     </p><b>100</b>: Bonus permanent de + 5 en chance pendant la guérison.</p>",
                                     now:0,
                                     max:100,
-                                    tier4:{}
+                                    tier4:{
+                                        alchemy: {
+                                            id:15,
+                                            fr: "Alchimie",
+                                            img:"./assets/crafting/Alchemy.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Alchimie",
+                                            info:"<h3 class='text-center'>Alchimie</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximale des cocktails produits.</p>\
+                                            </p><b>0</b>: Vous pouvez préparer des cocktails à double effet à partir de trois ingrédients.</p>\
+                                            </p><b>30</b>: Vous pouvez préparer des cocktails à double effet (1 catalyseur).</p>\
+                                            </p><b>60</b>: Vous pouvez préparer des cocktails à double effet (1 catalyseur), ainsi que du naphta explosif (qualité > à 60), du flux et des épices.</p>\
+                                            </p><b>90</b>: Vous pouvez préparer toutes sortes de cocktails avec toutes sortes d'ingrédients et catalyseurs.</p>\
+                                            </p><b>100</b>: Vous pouvez essayer de transmuter le fer en or (1 morceau par jour; chances de succès : 1%%).</p>",
+                                            now:0,
+                                            max:100
+                                        }
+                                    }
                                 },
                                 forestry: {
+                                    id:6,
                                     fr: "Foresterie",
                                     img:"./assets/crafting/Forestry.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Foresterie",
@@ -231,12 +355,12 @@ var app = new Vue({
                                     </p><b>90</b>: Vous pouvez planter les arbres à bois dur (ormes, érables et chênes).</p>\
                                     </p><b>100</b>: Bonus permanent de 5 en chance lors de l'utilisation des capacités de foresterie.</p>",
                                     now:0,
-                                    max:100,
-                                    tier4:{}
+                                    max:100
                                 }
                             }
                         }, 
                         farming: {
+                            id:21,
                             fr: "Agriculture",
                             img:"./assets/crafting/Farming.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Agriculture",
@@ -251,6 +375,7 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 advfarming: {
+                                    id:32,
                                     fr: "Agriculture avancée",
                                     img:"./assets/crafting/Advfarming.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Agriculture_avanc%C3%A9e",
@@ -263,7 +388,38 @@ var app = new Vue({
                                     </p><b>100</b>: Qualité maximale des objets crées.</p>",
                                     now:0,
                                     max:100,
-                                    tier4:{}
+                                    tier4:{
+                                        cooking: {
+                                            id:24,
+                                            fr: "Cuisine",
+                                            img:"./assets/crafting/Cooking.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Cuisine",
+                                            info:"<h3 class='text-center'>Cuisine</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximale de la nourriture et des breuvages produits.</p>\
+                                            </p><b>0</b>: Vous pouvez préparer des recettes simples (1-2 ingrédients)</p>\
+                                            </p><b>30</b>: Vous pouvez préparer des recettes complexes (3 ingrédients).</p>\
+                                            </p><b>60</b>: Vous pouvez préparer des recettes expertes (4 ingrédient), et produire du vin.</p>\
+                                            </p><b>90</b>: Vous pouvez préparer des recettes délicieuses (5 Ingrédients).</p>\
+                                            </p><b>100</b>: Bonus de +5 en chance pour assaisonner des aliments.</p>",
+                                            now:0,
+                                            max:100
+                                        },
+                                        brewing: {
+                                            id:13,
+                                            fr: "Brassage",
+                                            img:"./assets/crafting/Brewing.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Brassage",
+                                            info:"<h3 class='text-center'>Brassage</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximale de l'alcool produit.</p>\
+                                            </p><b>0</b>: Vous pouvez brasser du cidre.</p>\
+                                            </p><b>30</b>: Vous pouvez brasser du vin.</p>\
+                                            </p><b>60</b>: Vous pouvez brasser de l'hydromel.</p>\
+                                            </p><b>90</b>: Vous pouvez brasser de la bière.</p>\
+                                            </p><b>100</b>: Permet de produire des alcools exceptionnels (+20% qualité et un nom unique)(0,01% chance).</p>",
+                                            now:0,
+                                            max:100
+                                        }
+                                    }
                                 }
                             }
                         }                    
@@ -310,15 +466,455 @@ var app = new Vue({
                                     </p><b>100</b>: Bonus permanent de + 5 en chance lors de l'utilisation de capacités d'élevage.</p>",
                                     now:0,
                                     max:100,
-                                    tier4:{}
+                                    tier4:{
+                                        warhorse: {
+                                            id:26,
+                                            fr: "Dressage de chevaux de guerre",
+                                            img:"./assets/crafting/Warhorse.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Dressage_de_chevaux_de_guerre",
+                                            info:"<h3 class='text-center'>Dressage de chevaux de guerre</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximale des chevaux de guerre entraînés (la qualité d'un cheval de guerre influe sur ses points de vie et sur sa vitesse de déplacement et de rotation).</p>\
+                                            </p><b>0</b>: Vous pouvez dresser un cheval de bataille (sauf variétés lourdes et robustes).</p>\
+                                            </p><b>30</b>: Chance de dresser un cheval de guerre robuste.</p>\
+                                            </p><b>60</b>: Chance de dresser un cheval de guerre lourd.</p>\
+                                            </p><b>90</b>: Chance de dresser un cheval de guerre fougueux.</p>\
+                                            </p><b>100</b>: Chance de dresser un cheval de guerre royal.</p>",
+                                            now:0,
+                                            max:100
+                                        },
+                                        tailoring: {
+                                            id:25,
+                                            fr: "Couture",
+                                            img:"./assets/crafting/Tailoring.png",
+                                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Couture",
+                                            info:"<h3 class='text-center'>Couture</h3>\
+                                            </p><b>Tout niveau</b>: Qualité maximale de tenues fabriquées.</p>\
+                                            </p><b>0</b>: Vous pouvez fabriquer des objets simples en tissu ou en cuir (bottes, casques, gants).</p>\
+                                            </p><b>30</b>: Vous pouvez fabriquer des armures en cuir ou matelassées simples.</p>\
+                                            </p><b>60</b>: Vous pouvez fabriquer des armures en cuir avancées. Vous pouvez tisser et tailler des vêtements en soie qui offrent des bonus dans plusieurs compétences.</p>\
+                                            </p><b>90</b>: Vous pouvez fabriquer des armures et des vêtements exceptionnels (qualité +20%% et nom unique) (0,01%% chance).</p>\
+                                            </p><b>100</b>: Vous pouvez fabriquer des armures royales et des robes décorées.</p>",
+                                            now:0,
+                                            max:100
+                                        }
+                                    }
                                 }
                             }
                         }  
                     }
                 }
             },
-            combat: {},
-            minor: {},
+            // COMBAT CARD DATA
+            combat: {
+                cavalry:{ 
+                    id:28,
+                    fr:"Cavalier", 
+                    img:"./assets/combat/Cavalry.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Cavalier",
+                    info:"<h3 class='text-center'>Cavalier</h3>\
+                    <p><b>0</b>: Vous pouvez utiliser les épées à une main et demie. Vous pouvez utiliser les armes à une main à dos de cheval. \
+                    Vous pouvez créer des outils primitifs. Vous pouvez tailler des pierres de construction.</p>\
+                    <p><b>30</b>: Vous pouvez équiper des armures en cotte de mailles pour novice.</p>\
+                    <p><b>60</b>: Vous pouvez monter des chevaux de guerre simples.</p>\
+                    <p><b>90</b>: Chance réduite de tomber de selle en combat.</p>\
+                    <p><b>100</b>: Tour de force.</p>",
+                    now:0,
+                    max:100,
+                    tier2:{
+                        knight:{ 
+                            id:29,
+                            fr:"Chevalier", 
+                            img:"./assets/combat/Knight.png", 
+                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Chevalier",
+                            info:"<h3 class='text-center'>Chevalier</h3>\
+                            <p><b>0</b>: Vous pouvez utiliser une épée de chevalier.</p>\
+                            <p><b>30</b>: Vous pouvez équiper des armures en cotte de mailles ordinaires.</p>\
+                            <p><b>60</b>: Vous pouvez monter des chevaux de guerre fougueux et robustes. Donne une chance aux piques ennemies de glisser sans blesser le cheval ou le cavalier.</p>\
+                            <p><b>90</b>: Poigne de fer - Personne n'est capable de vous faire tomber de selle pour une courte durée.</p>\
+                            <p><b>100</b>: Tour de force.</p>",
+                            now:0,
+                            max:100,
+                            tier3:{
+                                lancer:{ 
+                                    id:30,
+                                    fr:"Lancier", 
+                                    img:"./assets/combat/Lancer.png", 
+                                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Lancier",
+                                    info:"<h3 class='text-center'>Lancier</h3>\
+                                    <p><b>0</b>: Vous pouvez utiliser des lances à dos de cheval</p>\
+                                    <p><b>30</b>: Vous pouvez équiper des armures en cotte de mailles lourdes. Il est plus aisé de viser avec une lance.</p>\
+                                    <p><b>60</b>: Vous pouvez monter des chevaux de guerre lourds. Vous pouvez garder la lance baissée plus longtemps.</p>\
+                                    <p><b>90</b>: Vous pouvez équiper des armures en cotte de mailles royales.\
+                                    <br>Irrésistible - un cheval lourd lancé au galop pendant plus de cinq secondes devient insensible à tout sauf aux murs de piques ou aux clôtures défensives et obtiennent la capacité de renverser les joueurs sans perdre de vitesse. L'effet cesse lorsque le galop est interrompu.</p>\
+                                    <p><b>100</b>: La terre gronde autour d'un cheval de guerre lourd au galop. Vous pouvez chevaucher des chevaux de guerre royaux.</p>",
+                                    now:0,
+                                    max:100
+                                }
+                            }
+                        }
+                    }        
+                },
+                militia:{ 
+                    id:33,
+                    fr:"Milice", 
+                    img:"./assets/combat/Cavalry.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Milice",
+                    info:"<h3 class='text-center'>Milice</h3>\
+                    <p><b>0</b>: Vous pouvez attaquer à mains nues et parer les attaques d'armes d'hasts.\
+                    Vous pouvez utiliser les armes de milice (fourches, cannes, pioches, pelles et autres outils manuels). \
+                    Vous pouvez utiliser la capacité Fuyez ! (la vitesse augmente pendant une courte période, mais les armes deviennent inutilisables pendant la durée). Dégaine depuis l'emplacement ceinture gauche. Dégaine depuis l'emplacement ceinture droit. Dégaine depuis l'emplacement dos gauche. Dégaine depuis l'emplacement dos droit. Demandez grâce à votre adversaire. Fuyez !. Vous pouvez accorder une mort élégante à vos ennemis. </p>\
+                    <p><b>30</b>: Vous pouvez équiper les armures matelassées de novice.</p>\
+                    <p><b>60</b>: Chance d’assommer si une attaque à mains nues frappe la tête.</p>\
+                    <p><b>90</b>: Désarmement : chance d'attraper l'arme d'hast de votre adversaire après une parade à mains nues réussie.</p>\
+                    <p><b>100</b>: Tour de force.</p>",
+                    now:0,
+                    max:100,
+                    tier2:{
+                        spearman:{ 
+                            id:34,
+                            fr:"Piquier", 
+                            img:"./assets/combat/Spearman.png", 
+                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Piquier",
+                            info:"<h3 class='text-center'>Piquier</h3>\
+                            <p><b>0</b>: Vous pouvez utiliser piques et lances.</p>\
+                            <p><b>30</b>: Vous pouvez équiper des armures matelassées ordinaires.</p>\
+                            <p><b>60</b>: Vous pouvez effectuer le « Mur de piques » - une attaque d'estoc qui vous rend immobile, inflige beaucoup de dégâts aux chevaux et les arrête toujours.</p>\
+                            <p><b>90</b>: Les attaques d'estoc avec les lances ne peuvent être parées.</p>\
+                            <p><b>100</b>: Tour de force.</p>",
+                            now:0,
+                            max:100,
+                            tier3:{
+                                guard:{ 
+                                    id:35,
+                                    fr:"Garde", 
+                                    img:"./assets/combat/Guard.png", 
+                                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Garde",
+                                    info:"<h3 class='text-center'>Garde</h3>\
+                                    <p><b>0</b>: Vous pouvez utiliser les armes d'hast.</p>\
+                                    <p><b>30</b>: Vous pouvez équiper les armures matelassées lourdes.</p>\
+                                    <p><b>60</b>: Peut réaliser une attaque spéciale après une parade réussie\
+                                    Peut réaliser une attaque spéciale après avoir frappé un cheval.</p>\
+                                    <p><b>90</b>: Vous pouvez équiper les armures matelassées royales. Les attaques en brisé ont une plus grande chance de désarçonner un cavalier.</p>\
+                                    <p><b>100</b>: Tour de force.</p>",
+                                    now:0,
+                                    max:100
+                                }
+                            }
+                        }
+                    }        
+                },
+                footman:{ 
+                    id:36,
+                    fr:"Fantassin", 
+                    img:"./assets/combat/Footman.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Fantassin",
+                    info:"<h3 class='text-center'>Fantassin</h3>\
+                    <p><b>0</b>: Vous pouvez utiliser les haches à une main et boucliers primitifs.</p>\
+                    <p><b>30</b>: Vous pouvez équiper les armures d'écailles de novice. Vous pouvez utiliser les boucliers de duel.</p>\
+                    <p><b>60</b>: Vous pouvez utiliser les targes. Casse-Crâne ! : Dextre - Senestre - Brisé (ou Senestre - Dextre - Brisé). Cet enchaînement donne l'effet Coup puissant.</p>\
+                    <p><b>90</b>: Toc-Toc ! : Brisé — Brisé — Brisé. Cet enchaînement donne l'effet Coup puissant.</p>\
+                    <p><b>100</b>: Tour de force.</p>",
+                    now:0,
+                    max:100,
+                    tier2:{
+                        swordman:{ 
+                            id:38,
+                            fr:"Épéiste", 
+                            img:"./assets/combat/Swordman.png", 
+                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Épéiste",
+                            info:"<h3 class='text-center'>Épéiste</h3>\
+                            <p><b>0</b>: Vous pouvez utiliser les épées à une main.</p>\
+                            <p><b>30</b>: Vous pouvez équiper les armures d'écailles ordinaires. Vous pouvez utiliser les boucliers de chevalier.</p>\
+                            <p><b>60</b>: Vous pouvez utiliser le grand écu. Vous pouvez donner un coup de bouclier. Mille entailles ! : Dextre - Senestre - Dextre (ou Senestre - Dextre - Senestre). Cet enchaînement a une chance d'infliger un saignement à votre adversaire.</p>\
+                            <p><b>90</b>: Vous pouvez courir en bloquant. Avalanche de coups ! : Dextre - Senestre - Estoc (ou Senestre - Dextre - Estoc). Cet enchaînement donne l'effet Coup puissant.</p>\
+                            <p><b>100</b>: Tour de force.</p>",
+                            now:0,
+                            max:100,
+                            tier3:{
+                                huscarl:{ 
+                                    id:40,
+                                    fr:"Huscarl", 
+                                    img:"./assets/combat/Huscarl.png", 
+                                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Huscarl",
+                                    info:"<h3 class='text-center'>Huscarl</h3>\
+                                    <p><b>0</b>: Vous pouvez utiliser les masses et armes perçantes à une main.</p>\
+                                    <p><b>30</b>: Vous pouvez équiper les armures d'écailles lourdes. Vous pouvez utiliser les targes lourdes.</p>\
+                                    <p><b>60</b>: Vous pouvez utiliser les scutums. Point de vulnérabilité ! : Brisé - Dextre - Senestre (ou Brisé - Senestre - Dextre). Cet enchaînement donne l'effet Coup puissant.</p>\
+                                    <p><b>90</b>: Vous pouvez équiper les armures d'écailles royales. Un autre trou ! : Brisé - Brisé - Brisé. Cet enchaînement donne l'effet Coup puissant.</p>\
+                                    <p><b>100</b>: Tour de force.</p>",
+                                    now:0,
+                                    max:100
+                                }
+                            }
+                        }
+                    }        
+                },
+                slinger:{ 
+                    id:47,
+                    fr:"Frondeur", 
+                    img:"./assets/combat/Slinger.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Frondeur",
+                    info:"<h3 class='text-center'>Frondeur</h3>\
+                    <p><b>0</b>: Vous pouvez utiliser les frondes.</p>\
+                    <p><b>30</b>: Vous pouvez équiper les armures en cuir de novice. Vous pouvez utiliser des couteaux de lancer.</p>\
+                    <p><b>60</b>: Vous pouvez utiliser des haches de lancer et des javelots.</p>\
+                    <p><b>90</b>: Vous pouvez lancer des pots de naphta.</p>\
+                    <p><b>100</b>: 	Vous pouvez lancer des pots d'artificier.</p>",
+                    now:0,
+                    max:100,
+                    tier2:{
+                        archer:{ 
+                            id:48,
+                            fr:"Archer", 
+                            img:"./assets/combat/Archer.png", 
+                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Archer",
+                            info:"<h3 class='text-center'>Archer</h3>\
+                            <p><b>0</b>: Vous pouvez utiliser des arcs simples et arbalètes légères.</p>\
+                            <p><b>30</b>: Rechargement plus rapide, meilleure visée. Vous pouvez équiper les armures en cuir ordinaires.</p>\
+                            <p><b>60</b>: Vous pouvez utiliser les arcs courts et composites. Vous pouvez placer des réserves de flèche : réduit le temps de rechargement d'un personnage se tenant à proximité. Puissance d’arrêt : le prochain tir d'arbalète étourdira l'ennemi pendant une seconde.</p>\
+                            <p><b>90</b>: Flèche dans le genou ! : la prochaine flèche ralentira l'ennemi de 10%. Si la flèche touche la jambe, l'ennemi sera ralenti de 50%.</p>\
+                            <p><b>100</b>: Vous pouvez utiliser les flèches d'artificier.</p>",
+                            now:0,
+                            max:100,
+                            tier3:{
+                                ranger:{ 
+                                    id:49,
+                                    fr:"Veilleur", 
+                                    img:"./assets/combat/Ranger.png", 
+                                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Veilleur",
+                                    info:"<h3 class='text-center'>Veilleur</h3>\
+                                    <p><b>0</b>: Vous pouvez utiliser l’arbalète.</p>\
+                                    <p><b>30</b>: Rechargement plus rapide, meilleure visée. Vous pouvez équiper les armures de cuir lourdes. Vous pouvez utiliser un pavois comme couverture, puis le ranger dans l'inventaire.</p>\
+                                    <p><b>60</b>: Vous pouvez utiliser l'arc long et l’arbalète lourde. Vous pouvez déployer une clôture défensive : si les chevaux foncent dedans, ils subissent des dégâts ou peuvent mourir. Carreaux perforant : le prochain coup d'arbalète peut toucher jusqu'à trois ennemis s'ils se tiennent les uns derrières les autres</p>\
+                                    <p><b>90</b>: Vous pouvez équiper les armures en cuir royales. Volée : tire jusqu'à 10 flèches successivement sur une zone ciblée.</p>\
+                                    <p><b>100</b>: Vous pouvez utiliser les carreaux d'artificier.</p>",
+                                    now:0,
+                                    max:100
+                                }
+                            }
+                        }
+                    }        
+                },
+                assaulter:{ 
+                    id:43,
+                    fr:"Assaut", 
+                    img:"./assets/combat/Assaulter.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Assaut",
+                    info:"<h3 class='text-center'>Assaut</h3>\
+                    <p><b>0</b>: Vous pouvez utiliser les épées à deux mains.</p>\
+                    <p><b>30</b>: Vous pouvez équiper des armures de plaques de novice.</p>\
+                    <p><b>60</b>: Puissance écrasante ! : Dextre - Senestre - Estoc (ou Senestre - Dextre - Estoc). Cet enchaînement donne l'effet Coup puissant.</p>\
+                    <p><b>90</b>: Démembrement ! : Senestre - Dextre - Senestre (ou Dextre - Senestre - Dextre). Cet enchaînement donne l'effet Coup puissant.</p>\
+                    <p><b>100</b>: Tour de force.</p>",
+                    now:0,
+                    max:100,
+                    tier2:{
+                        vanguard:{ 
+                            id:44,
+                            fr:"Éclaireur", 
+                            img:"./assets/combat/Vanguard.png", 
+                            wiki:"https://lifeisfeudal-fr.gamepedia.com/Éclaireur",
+                            info:"<h3 class='text-center'>Éclaireur</h3>\
+                            <p><b>0</b>: Vous pouvez utiliser haches et masses à deux mains.</p>\
+                            <p><b>30</b>: Vous pouvez équiper des armures de plaques ordinaires.</p>\
+                            <p><b>60</b>: Vous pouvez faire un bond. Exécution ! : Senestre - Dextre - Brisé (ou Dextre - Senestre - Brisé). Cet enchaînement a une chance d'infliger une blessure à votre adversaire. Si la frappe est bloquée par un bouclier, ce dernier recevra de gros dégâts. Craquant ! : Dextre - Senestre - Estoc (ou Senestre - Dextre - Estoc). Cet enchaînement a une chance d'infliger une fracture.</p>\
+                            <p><b>90</b>: À genoux ! : Dextre - Senestre - Brisé (ou Senestre - Dextre - Brisé). Cet enchaînement a une chance de faire chuter l'adversaire.</p>\
+                            <p><b>100</b>: Tour de force.</p>",
+                            now:0,
+                            max:100,
+                            tier3:{
+                                berserker:{ 
+                                    id:45,
+                                    fr:"Berserker", 
+                                    img:"./assets/combat/Berserker.png", 
+                                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Berserker",
+                                    info:"<h3 class='text-center'>Berserker</h3>\
+                                    <p><b>Tout niveau</b>: </p>\
+                                    <p><b>0</b>: Provocation (Orale) — Quelques mots bien choisis sur la mère de votre ennemi (augmentation de la Force).</p>\
+                                    <p><b>30</b>: Vous pouvez équiper des armures de plaques complètes. Lâche ! : la vitesse de l'ennemi ciblé augmente fortement, mais il risque également de trébucher et de tomber. Mains tremblantes (Précision des armes à distance réduite).</p>\
+                                    <p><b>60</b>: Arghhhhhh ! — Tentative de retirer tous les effets de lenteur et de poison sur soi-même.</p>\
+                                    <p><b>90</b>: Vous pouvez équiper des armures de plaques complètes royales. Tu es à moi ! : l'ennemi ciblé devient plus vulnérable et votre vitesse augmente légèrement.</p>\
+                                    <p><b>100</b>: Véritable Provocation avec animation.</p>",
+                                    now:0,
+                                    max:100
+                                }
+                            }
+                        }
+                    }        
+                },
+            },
+            secondCombat: {
+                formation:{ 
+                    id:56,
+                    fr:"Unité et formations", 
+                    img:"./assets/combat/Formation.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Unit%C3%A9_et_formations",
+                    info:"<h3 class='text-center'>Unité et formations</h3>\
+                    <p><b>Tout niveau</b>: % maximum de bonus d'unité qui peut être reçu et fourni.</p>\
+                    <p><b>0</b>: Vous pouvez recevoir des bonus de l'unité du leader si vous êtes dans la formation créée par le chef de cette unité. Vous pouvez donner des commandes vocales pour changer la formation (Mur/Pointe/Cercle) et créer des zones de formation. \
+                    <br>Vous pouvez recevoir des bonus de l'unité du leader si vous êtes dans la formation créée par le chef de cette unité. Vous pouvez donner des commandes vocales pour changer la formation (Mur/Pointe/Cercle) et créer des zones de formation.</p>\
+                    <p><b>30</b>: Vous pouvez donner l'ordre « Tenez la position ! » qui augmente la défense, mais diminue la vitesse de tous les membres de l'unité.</p>\
+                    <p><b>60</b>: Vous pouvez l'ordre « Chargez ! » qui augmente les dégâts infligés par les membres de l'unité pendant 20 secondes. Vous pouvez recevoir le bonus maximum des ordres et des formations.</p>\
+                    <p><b>90</b>: Vous pouvez donner l'ordre « En marche ! » qui offre un bonus de vitesse à tous les membres de l'unité à portée.</p>\
+                    <p><b>100</b>: La couleur de la zone de formation est différente.</p>",
+                    now:0,
+                    max:100
+                },
+                equipment:{ 
+                    id:57,
+                    fr:"Entretien du matériel", 
+                    img:"./assets/combat/Equipment.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Entretien_du_mat%C3%A9riel",
+                    info:"<h3 class='text-center'>Entretien du matériel</h3>\
+                    <p><b>Tout niveau</b>: Quantité de durabilité qui peut être restaurée par l'entretien des équipements.</p>\
+                    <p><b>0</b>:Vous pouvez effectuer des travaux de maintenance sur les armes, mais au prix d'une perte de durabilité maximale. </p>\
+                    <p><b>30</b>: Vous pouvez effectuer des travaux de maintenance sur les armures et boucliers, mais au prix d'une perte de durabilité maximale.</p>\
+                    <p><b>60</b>: Chance de récupérer des projectiles qui ont manqué leur cible (20%).</p>\
+                    <p><b>90</b>: Vous pouvez enduire de poison les armes à une main équipées.</p>\
+                    <p><b>100</b>: Chance de récupérer des projectiles qui ont manqué leur cible (22%).</p>",
+                    now:0,
+                    max:100
+                },
+                survival:{ 
+                    id:58,
+                    fr:"Survie au combat", 
+                    img:"./assets/combat/Survival.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Survie_au_combat",
+                    info:"<h3 class='text-center'>Survie au combat</h3>\
+                    <p><b>Tout niveau</b>: Durée de traitement d'une blessure. Transforme les dégâts fatals aux points de vie en dégâts aux points de conscience (% de la réduction max).</p>\
+                    <p><b>0</b>: Vous pouvez appliquer un bandage sur les blessures aux bras et aux jambes.</p> \
+                    <p><b>30</b>: Vous pouvez appliquer un bandage sur les saignement au torse.</p>\
+                    <p><b>60</b>: 5% de chances de doubler la quantité de dégâts fatals aux Points de vie (hHP) qui peuvent être transformés en dégâts aux Points de vie (sHP) (affecté par la Chance)</p>\
+                    <p><b>90</b>: Vous pouvez appliquer un bandage sur des blessures à la tête. 10% de chances de doubler la quantité de dégâts fatals aux Points de vie (hHP) qui peuvent être transformés en dégâts aux Points de vie (sHP) (affecté par la Chance)</p>\
+                    <p><b>100</b>: 11% de chances de doubler la quantité de dégâts fatals aux Points de vie (hHP) qui peuvent être transformés en dégâts aux Points de vie (sHP) (affecté par la Chance)</p>",
+                    now:0,
+                    max:100
+                },
+                demolition:{ 
+                    id:59,
+                    fr:"Démolition", 
+                    img:"./assets/combat/Demolition.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/D%C3%A9molition",
+                    info:"<h3 class='text-center'>Démolition</h3>\
+                    <p><b>Tout niveau</b>: Efficacité des activités liées à la démolition.</p>\
+                    <p><b>0</b>: Vous pouvez utiliser les torches au corps à corps comme une arme de siège. </p>\
+                    <p><b>30</b>: Utilisation plus efficace des torches.</p>\
+                    <p><b>60</b>: Vous pouvez manipuler un trébuchet.</p>\
+                    <p><b>90</b>: Efficacité des activités liées à la démolition.</p>\
+                    <p><b>100</b>: Vous pouvez utiliser des vaches comme projectile (juste pour s'amuser). </p>",
+                    now:0,
+                    max:100
+                }
+            },
+            minor: {
+                movement:{ 
+                    id:61,
+                    fr:"Mouvement", 
+                    img:"./assets/minor/Movement.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Mouvement",
+                    info:"<h3 class='text-center'>Mouvement </h3>\
+                    <p><b>Chaque niveau</b>: Vitesse maximale en portant quelque chose (%)</p>",
+                    now:0,
+                    max:100
+                    },
+                general:{ 
+                    id:62,
+                    fr:"Activités générales", 
+                    img:"./assets/minor/General.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Activit%C3%A9s_g%C3%A9n%C3%A9rales",
+                    info:"<h3 class='text-center'>Activités générales</h3>\
+                    <p><b>Chaque niveau</b>: Efficacité du repos. Vous pouvez effectuer plusieurs actions générales. </p>\
+                    <p><b>0</b>: Vous pouvez vous reposer correctement pour récupérer de l'endurance (hS) et des points de conscience (sHP).\
+                    <br>Animations d’interaction sociale:</p>\
+                    <ul><li>Approuver</li>\
+                    <li>Courtoisie</li>\
+                    <li>Danse</li>\
+                    <li>Désapprouver</li>\
+                    <li>Effrayé</li>\
+                    <li>Rigoler</li>\
+                    <li>Provocation</li>\
+                    <li>Honorer</li>\
+                    <li>Accueillir</li>",
+                    now:0,
+                    max:100
+                    },
+                riding:{ 
+                    id:63,
+                    fr:"Equitation", 
+                    img:"./assets/minor/Riding.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Equitation",
+                    info:"<h3 class='text-center'>Equitation</h3>\
+                    <p><b>Chaque niveau</b>: Qualité maximale des chevaux ordinaires qui peuvent être chevauchés efficacement.</p>",
+                    now:0,
+                    max:100
+                    },
+                swimming:{ 
+                    id:64,
+                    fr:"Natation", 
+                    img:"./assets/minor/Swimming.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Natation",
+                    info:"<h3 class='text-center'>Natation</h3>\
+                    <p><b>Chaque niveau</b>: Endurance utilisée pour nager.</p>",
+                    now:0,
+                    max:100
+                    },
+                authority:{ 
+                    id:65,
+                    fr:"Autorité", 
+                    img:"./assets/minor/Authority.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Autorité",
+                    info:"<h3 class='text-center'>Autorité</h3>\
+                    <p><b>0</b>: Vous pouvez ériger un Monument de guilde. Vous pouvez marquer les intrus comme des criminels</p>",
+                    now:0,
+                    max:100
+                    },
+                piety:{ 
+                    id:54,
+                    fr:"Piété", 
+                    img:"./assets/minor/Piety.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Piété",
+                    info:"<h3 class='text-center'>Piété</h3>\
+                    <p><b>Chaque niveau</b>: Votre prière a plus de chances d'être entendue par Dieu.</p>\
+                    <p><b>0</b>: Vous pouvez prier pour un Retour sain et sauf chez soi.</p>\
+                    <p><b>30</b>: Vous pouvez prier Dieu (augmentation de l'alignement, une seule utilisation par jour).</p>\
+                    <p><b>60</b>: Vous pouvez bénir les gens en faisant appel à la « Miséricorde » qui supprime la peine de mort pendant les événements JcJ (combats/sièges/Heure du jugement).</p>\
+                    <p><b>90</b>: Vous pouvez bénir les gens en faisant appel à « L'amour de Dieu » qui augmente la chance de 3.</p>\
+                    <p><b>100</b>: La bénédiction l'Amour de Dieu augmente la chance de 3,5.</p>",
+                    now:0,
+                    max:100
+                    },
+                    
+                mentoring:{ 
+                    id:55,
+                    fr:"Mentorat", 
+                    img:"./assets/minor/Mentoring.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Mentorat",
+                    info:"<h3 class='text-center'>Mentorat</h3>\
+                    <p><b>Chaque niveau</b>: Niveau de compétence maximal qui peut être accordé aux étudiants</p>\
+                    <p><b>0</b>: Vous pouvez enseigner des compétences de 1er niveau\
+                    <p><b>30</b>: Vous pouvez enseigner des compétences de 2ème niveau et secondaires</p>\
+                    <p><b>60</b>: Vous pouvez enseigner des compétences de 3ème et 4ème niveau</p>\
+                    <p><b>90</b>: Peut enseigner toutes les compétences</p>\
+                    <p><b>100</b>: Bonus permanent de +5 en chance quand vous enseignez</p>",
+                    now:0,
+                    max:100
+                    },
+                arts:{ 
+                    id:53,
+                    fr:"Beaux Arts", 
+                    img:"./assets/minor/Arts.png", 
+                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Beaux-arts",
+                    info:"<h3 class='text-center'>Beaux Arts</h3>\
+                    <p><b>Chaque niveau</b>:Qualité maximale des œuvres d'art.</p>\
+                    <p><b>0</b>: Vous pouvez peindre de petits tableaux.</p>\
+                    <p><b>30</b>: Vous pouvez fabriquer un trophée de cerf.</p>\
+                    <p><b>60</b>: Vous pouvez peindre des tableaux et fabriquer un trophée d'élan.</p>\
+                    <p><b>90</b>: Vous pouvez peindre de grandes toiles et fabriquer un trophée d'ours.</p>\
+                    <p><b>100</b>: Bonus permanent de + 5 en chance lors de la création d'œuvres d'art.</p>",
+                    now:0,
+                    max:100
+                    },
+                },
             stats: {}
         }
     },
