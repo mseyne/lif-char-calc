@@ -5,6 +5,12 @@
 var app = new Vue({
     el: '#app',
     data: {
+        // Help
+        help:"<b>Explication</b>: Le nombre de point maximun pour un Tier est de 100, à partir du Tier 2, \
+        Il faut un minimum de 30 points au Tier précédent direct pour ajouter des points \
+        jusqu'à 29, Il faut un minimum de 60 points à tous les tiers précédents pour ajouter des points au delà de 29.\
+        <br> <b>Exemple</b>: (Tier1: 30, Tier2: 29) - (Tier1:60, Tier2:30, Tier:3:29) - (Tier1: 60, Tier2:60, Tier3:60, Tier4:100)\
+        <br> <b>Méthode</b>: Vous pouvez définir la compétence que vous souhaitez monter, les point de dépendance minimum de tiers parents seront mise à jour automatiquement.",
         // Pages
         p:{
             crafting: {fr:"Artisanat", now:0, max:400, active:true},
@@ -17,8 +23,10 @@ var app = new Vue({
         cards:{
             // CRAFTING CARD DATA
             crafting: { 
-                artisan:{ 
+                artisan:{
+                    tier:1, 
                     id:1,
+                    path:[1],
                     fr:"Artisanat", 
                     img:"./assets/crafting/Artisan.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Artisanat",
@@ -34,7 +42,9 @@ var app = new Vue({
                     max:100,
                     tier2: {
                         carpentry: { 
+                            tier:2,
                             id:8,
+                            path:[1, 8],
                             fr: "Menuiserie",
                             img:"./assets/crafting/Carpentry.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Menuiserie",
@@ -49,7 +59,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 bowcraft: {
+                                    tier:3,
                                     id:9,
+                                    path:[1, 8, 9],
                                     fr: "Fabrication d'arc",
                                     img:"./assets/crafting/Bowcraft.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Fabrication_d%27arc",
@@ -64,7 +76,9 @@ var app = new Vue({
                                     max:100,
                                     tier4:{
                                         warfare: {
+                                            tier:4,
                                             id:10,
+                                            path:[1, 8, 9, 10],
                                             fr: "Ingénierie de siège",
                                             img:"./assets/crafting/Warfare.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Ing%C3%A9nierie_de_si%C3%A8ge",
@@ -83,7 +97,9 @@ var app = new Vue({
                             }
                         }, 
                         construction: {
+                            tier:2,
                             id:18,
+                            path:[1, 18],
                             fr: "Construction",
                             img:"./assets/crafting/Construction.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Construction",
@@ -98,7 +114,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 masonry: {
+                                    tier:3,
                                     id:19,
+                                    path:[1, 18, 19],
                                     fr: "Maçonnerie",
                                     img:"./assets/crafting/Masonry.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Ma%C3%A7onnerie",
@@ -113,7 +131,9 @@ var app = new Vue({
                                     max:100,
                                     tier4:{
                                         architecture: {
+                                            tier:4,
                                             id:20,
+                                            path:[1, 18, 19, 20],
                                             fr: "Architecture",
                                             img:"./assets/crafting/Architecture.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Architecture",
@@ -128,7 +148,9 @@ var app = new Vue({
                                             max:100
                                         },
                                         building: {
+                                            tier:4,
                                             id:7,
+                                            path:[1, 18, 19, 7],
                                             fr: "Maintenance des bâtiments",
                                             img:"./assets/crafting/Building.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Maintenance_des_b%C3%A2timents",
@@ -147,7 +169,9 @@ var app = new Vue({
                             }
                         }, 
                         digging: {
+                            tier:2,
                             id: 16,
+                            path:[1, 16],
                             fr: "Forage",
                             img:"./assets/crafting/Digging.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Forage",
@@ -162,7 +186,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 mining: {
+                                    tier:3,
                                     id: 2,
+                                    path:[1, 16, 2],
                                     fr: "Minage",
                                     img:"./assets/crafting/Mining.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Minage",
@@ -177,7 +203,9 @@ var app = new Vue({
                                     max:100,
                                     tier4:{
                                         prospecting: {
+                                            tier:4,
                                             id:31,
+                                            path:[1, 16, 2, 31],
                                             fr: "Prospection des éléments précieux",
                                             img:"./assets/crafting/Prospecting.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Prospection_des_%C3%A9l%C3%A9ments_pr%C3%A9cieux",
@@ -192,7 +220,9 @@ var app = new Vue({
                                             max:100
                                         },
                                         jewelry: {
+                                            tier:4,
                                             id:52,
+                                            path:[1, 16, 2, 52],
                                             fr: "Bijouterie",
                                             img:"./assets/crafting/Jewelry.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Bijouterie",
@@ -211,7 +241,9 @@ var app = new Vue({
                             }
                         }, 
                         materials: {
+                            tier:2,
                             id: 17,
+                            path:[1, 17],
                             fr: "Préparation de matériaux",
                             img:"./assets/crafting/Materials.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Pr%C3%A9paration_de_mat%C3%A9riaux",
@@ -226,7 +258,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 smelting: {
+                                    tier:3,
                                     id: 3,
+                                    path:[1, 17, 3],
                                     fr: "Fonte",
                                     img:"./assets/crafting/Smelting.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Fonte",
@@ -241,7 +275,9 @@ var app = new Vue({
                                     max:100,
                                     tier4:{
                                         forging: {
+                                            tier:4,
                                             id:4,
+                                            path:[1, 17, 3, 4],
                                             fr: "Forge",
                                             img:"./assets/crafting/Forging.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Forge",
@@ -256,7 +292,9 @@ var app = new Vue({
                                             max:100
                                         },
                                         armorsmithing: {
+                                            tier:4,
                                             id:5,
+                                            path:[1, 17, 3, 5],
                                             fr: "Forge d'armure",
                                             img:"./assets/crafting/Armorsmithing.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Forge_d%27armure",
@@ -277,7 +315,9 @@ var app = new Vue({
                     } 
                 }, 
                 nature:{
+                    tier:1,
                     id:11,
+                    path:[11],
                     fr:"Connaissance de la nature", 
                     img:"./assets/crafting/Nature.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Connaissance_de_la_nature",
@@ -298,7 +338,9 @@ var app = new Vue({
                     max:100,
                     tier2: {
                         herbalism: { 
+                            tier:2,
                             id:12,
+                            path:[11, 12],
                             fr: "Herboristerie",
                             img:"./assets/crafting/Herbalism.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Herboristerie",
@@ -313,7 +355,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 healing: {
+                                    tier:3,
                                     id:14,
+                                    path:[11, 12, 14],
                                     fr: "Soins",
                                     img:"./assets/crafting/Healing.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Soins",
@@ -328,7 +372,9 @@ var app = new Vue({
                                     max:100,
                                     tier4:{
                                         alchemy: {
+                                            tier:4,
                                             id:15,
+                                            path:[11, 12, 14, 15],
                                             fr: "Alchimie",
                                             img:"./assets/crafting/Alchemy.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Alchimie",
@@ -345,7 +391,9 @@ var app = new Vue({
                                     }
                                 },
                                 forestry: {
+                                    tier:3,
                                     id:6,
+                                    path:[11, 12, 6],
                                     fr: "Foresterie",
                                     img:"./assets/crafting/Forestry.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Foresterie",
@@ -362,7 +410,9 @@ var app = new Vue({
                             }
                         }, 
                         farming: {
+                            tier:2,
                             id:21,
+                            path:[11, 21],
                             fr: "Agriculture",
                             img:"./assets/crafting/Farming.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Agriculture",
@@ -377,7 +427,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 advfarming: {
+                                    tier:3,
                                     id:32,
+                                    path:[11, 21, 32],
                                     fr: "Agriculture avancée",
                                     img:"./assets/crafting/Advfarming.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Agriculture_avanc%C3%A9e",
@@ -392,7 +444,9 @@ var app = new Vue({
                                     max:100,
                                     tier4:{
                                         cooking: {
+                                            tier:4,
                                             id:24,
+                                            path:[11, 21, 32, 24],
                                             fr: "Cuisine",
                                             img:"./assets/crafting/Cooking.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Cuisine",
@@ -407,7 +461,9 @@ var app = new Vue({
                                             max:100
                                         },
                                         brewing: {
+                                            tier:4,
                                             id:13,
+                                            path:[11, 21, 32, 13],
                                             fr: "Brassage",
                                             img:"./assets/crafting/Brewing.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Brassage",
@@ -428,6 +484,9 @@ var app = new Vue({
                     }
                 },
                 hunting:{
+                    tier:1,
+                    id: 51,
+                    path:[51],
                     fr:"Chasse", 
                     img:"./assets/crafting/Hunting.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Chasse",
@@ -442,6 +501,9 @@ var app = new Vue({
                     max:100,
                     tier2: {
                         animal: {
+                            tier:2,
+                            id:22,
+                            path:[51, 22],
                             fr: "Connaissance des animaux",
                             img:"./assets/crafting/Animal.png",
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Connaissance_des_animaux",
@@ -456,6 +518,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 procuration: {
+                                    tier:3,
+                                    id: 23,
+                                    path:[51, 22, 23],
                                     fr: "Élevage",
                                     img:"./assets/crafting/Procuration.png",
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/%C3%89levage",
@@ -470,7 +535,9 @@ var app = new Vue({
                                     max:100,
                                     tier4:{
                                         warhorse: {
+                                            tier:4,
                                             id:26,
+                                            path:[51, 22, 23, 26],
                                             fr: "Dressage de chevaux de guerre",
                                             img:"./assets/crafting/Warhorse.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Dressage_de_chevaux_de_guerre",
@@ -485,7 +552,9 @@ var app = new Vue({
                                             max:100
                                         },
                                         tailoring: {
+                                            tier:4,
                                             id:25,
+                                            path:[51, 22, 23, 25],
                                             fr: "Couture",
                                             img:"./assets/crafting/Tailoring.png",
                                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Couture",
@@ -509,7 +578,9 @@ var app = new Vue({
             // COMBAT CARD DATA
             combat: {
                 cavalry:{ 
+                    tier:1,
                     id:28,
+                    path: [28],
                     fr:"Cavalier", 
                     img:"./assets/combat/Cavalry.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Cavalier",
@@ -524,7 +595,9 @@ var app = new Vue({
                     max:100,
                     tier2:{
                         knight:{ 
+                            tier:2,
                             id:29,
+                            path: [28, 29],
                             fr:"Chevalier", 
                             img:"./assets/combat/Knight.png", 
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Chevalier",
@@ -538,7 +611,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 lancer:{ 
+                                    tier:3,
                                     id:30,
+                                    path: [28, 29, 30],
                                     fr:"Lancier", 
                                     img:"./assets/combat/Lancer.png", 
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Lancier",
@@ -557,7 +632,9 @@ var app = new Vue({
                     }        
                 },
                 militia:{ 
+                    tier:1,
                     id:33,
+                    path: [33],
                     fr:"Milice", 
                     img:"./assets/combat/Cavalry.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Milice",
@@ -573,7 +650,9 @@ var app = new Vue({
                     max:100,
                     tier2:{
                         spearman:{ 
+                            tier:2,
                             id:34,
+                            path: [33, 34],
                             fr:"Piquier", 
                             img:"./assets/combat/Spearman.png", 
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Piquier",
@@ -587,7 +666,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 guard:{ 
+                                    tier:3,
                                     id:35,
+                                    path: [33, 34, 35],
                                     fr:"Garde", 
                                     img:"./assets/combat/Guard.png", 
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Garde",
@@ -606,7 +687,9 @@ var app = new Vue({
                     }        
                 },
                 footman:{ 
+                    tier:1,
                     id:36,
+                    path: [36],
                     fr:"Fantassin", 
                     img:"./assets/combat/Footman.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Fantassin",
@@ -620,7 +703,9 @@ var app = new Vue({
                     max:100,
                     tier2:{
                         swordman:{ 
+                            tier:2,
                             id:38,
+                            path: [36, 38],
                             fr:"Épéiste", 
                             img:"./assets/combat/Swordman.png", 
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Épéiste",
@@ -634,7 +719,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 huscarl:{ 
+                                    tier:3,
                                     id:40,
+                                    path: [36, 38, 40],
                                     fr:"Huscarl", 
                                     img:"./assets/combat/Huscarl.png", 
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Huscarl",
@@ -652,7 +739,9 @@ var app = new Vue({
                     }        
                 },
                 slinger:{ 
+                    tier:1,
                     id:47,
+                    path: [47],
                     fr:"Frondeur", 
                     img:"./assets/combat/Slinger.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Frondeur",
@@ -666,7 +755,9 @@ var app = new Vue({
                     max:100,
                     tier2:{
                         archer:{ 
+                            tier:2,
                             id:48,
+                            path: [47, 48],
                             fr:"Archer", 
                             img:"./assets/combat/Archer.png", 
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Archer",
@@ -680,7 +771,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 ranger:{ 
+                                    tier:3,
                                     id:49,
+                                    path: [47, 48, 49],
                                     fr:"Veilleur", 
                                     img:"./assets/combat/Ranger.png", 
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Veilleur",
@@ -698,7 +791,9 @@ var app = new Vue({
                     }        
                 },
                 assaulter:{ 
+                    tier:1,
                     id:43,
+                    path: [43],
                     fr:"Assaut", 
                     img:"./assets/combat/Assaulter.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Assaut",
@@ -712,7 +807,9 @@ var app = new Vue({
                     max:100,
                     tier2:{
                         vanguard:{ 
+                            tier:2,
                             id:44,
+                            path: [43, 44],
                             fr:"Éclaireur", 
                             img:"./assets/combat/Vanguard.png", 
                             wiki:"https://lifeisfeudal-fr.gamepedia.com/Éclaireur",
@@ -726,7 +823,9 @@ var app = new Vue({
                             max:100,
                             tier3:{
                                 berserker:{ 
+                                    tier:3,
                                     id:45,
+                                    path: [43, 44, 45],
                                     fr:"Berserker", 
                                     img:"./assets/combat/Berserker.png", 
                                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Berserker",
@@ -746,8 +845,10 @@ var app = new Vue({
                 },
             },
             secondCombat: {
-                formation:{ 
+                formation:{
+                    tier:1,
                     id:56,
+                    path:[56],
                     fr:"Unité et formations", 
                     img:"./assets/combat/Formation.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Unit%C3%A9_et_formations",
@@ -763,6 +864,8 @@ var app = new Vue({
                     max:100
                 },
                 equipment:{ 
+                    tier:1,
+                    path:[57],
                     id:57,
                     fr:"Entretien du matériel", 
                     img:"./assets/combat/Equipment.png", 
@@ -778,6 +881,8 @@ var app = new Vue({
                     max:100
                 },
                 survival:{ 
+                    tier:1,
+                    path:[58],
                     id:58,
                     fr:"Survie au combat", 
                     img:"./assets/combat/Survival.png", 
@@ -793,6 +898,8 @@ var app = new Vue({
                     max:100
                 },
                 demolition:{ 
+                    tier:1,
+                    path:[59],
                     id:59,
                     fr:"Démolition", 
                     img:"./assets/combat/Demolition.png", 
@@ -810,6 +917,8 @@ var app = new Vue({
             },
             minor: {
                 movement:{ 
+                    tier:1,
+                    path:[61],
                     id:61,
                     fr:"Mouvement", 
                     img:"./assets/minor/Movement.png", 
@@ -820,6 +929,8 @@ var app = new Vue({
                     max:100
                     },
                 general:{ 
+                    tier:1,
+                    path:[62],
                     id:62,
                     fr:"Activités générales", 
                     img:"./assets/minor/General.png", 
@@ -841,6 +952,8 @@ var app = new Vue({
                     max:100
                     },
                 riding:{ 
+                    tier:1,
+                    path:[63],
                     id:63,
                     fr:"Equitation", 
                     img:"./assets/minor/Riding.png", 
@@ -851,6 +964,8 @@ var app = new Vue({
                     max:100
                     },
                 swimming:{ 
+                    tier:1,
+                    path:[64],
                     id:64,
                     fr:"Natation", 
                     img:"./assets/minor/Swimming.png", 
@@ -861,6 +976,8 @@ var app = new Vue({
                     max:100
                     },
                 authority:{ 
+                    tier:1,
+                    path:[65],
                     id:65,
                     fr:"Autorité", 
                     img:"./assets/minor/Authority.png", 
@@ -871,6 +988,8 @@ var app = new Vue({
                     max:100
                     },
                 piety:{ 
+                    tier:1,
+                    path:[54],
                     id:54,
                     fr:"Piété", 
                     img:"./assets/minor/Piety.png", 
@@ -885,8 +1004,9 @@ var app = new Vue({
                     now:0,
                     max:100
                     },
-                    
                 mentoring:{ 
+                    tier:1,
+                    path:[55],
                     id:55,
                     fr:"Mentorat", 
                     img:"./assets/minor/Mentoring.png", 
@@ -902,12 +1022,14 @@ var app = new Vue({
                     max:100
                     },
                 arts:{ 
+                    tier:1,
+                    path:[53],
                     id:53,
                     fr:"Beaux Arts", 
                     img:"./assets/minor/Arts.png", 
                     wiki:"https://lifeisfeudal-fr.gamepedia.com/Beaux-arts",
                     info:"<h3 class='text-center'>Beaux Arts</h3>\
-                    <p><b>Chaque niveau</b>:Qualité maximale des œuvres d'art.</p>\
+                    <p><b>Chaque niveau</b>: Qualité maximale des œuvres d'art.</p>\
                     <p><b>0</b>: Vous pouvez peindre de petits tableaux.</p>\
                     <p><b>30</b>: Vous pouvez fabriquer un trophée de cerf.</p>\
                     <p><b>60</b>: Vous pouvez peindre des tableaux et fabriquer un trophée d'élan.</p>\
@@ -931,9 +1053,9 @@ var app = new Vue({
         },
         changePage: function(page){
             for (var p in this.p) {
-                this.p[p].active = false
+                this.p[p].active = false;
             }
-            page.active = true
+            page.active = true;
         },
         checkValue: function(val, card){
             val = Number(val);
@@ -949,13 +1071,13 @@ var app = new Vue({
             let total = 0;
             if (page == 'crafting') {
                 for ( let tier1 in this.cards[page]) {
-                    total += this.cards[page][tier1].now;
+                    total += Number(this.cards[page][tier1].now);
                     for (let tier2 in this.cards[page][tier1]["tier2"]) {
-                        total += this.cards[page][tier1]["tier2"][tier2].now;
+                        total += Number(this.cards[page][tier1]["tier2"][tier2].now);
                         for (let tier3 in this.cards[page][tier1]["tier2"][tier2]["tier3"]) {
-                            total += this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now;
+                            total += Number(this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now);
                             for (let tier4 in this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"]) {
-                                total += this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"][tier4].now;
+                                total += Number(this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"][tier4].now);
                             }
                         }
                     }
@@ -964,29 +1086,89 @@ var app = new Vue({
 
             if ( page == 'combat') {
                 for ( let tier1 in this.cards[page]) {
-                    total += this.cards[page][tier1].now;
+                    total += Number(this.cards[page][tier1].now);
                     for (let tier2 in this.cards[page][tier1]["tier2"]) {
-                        total += this.cards[page][tier1]["tier2"][tier2].now;
+                        total += Number(this.cards[page][tier1]["tier2"][tier2].now);
                         for (let tier3 in this.cards[page][tier1]["tier2"][tier2]["tier3"]) {
-                            total += this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now;
+                            total += Number(this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now);
                         }
                     }
                 }
                 for ( let node in this.cards["secondCombat"]) {
-                    total += this.cards["secondCombat"][node].now;
+                    total += Number(this.cards["secondCombat"][node].now);
                 }
             }
             this.p[page].now = total;
         },
-        updatePath: function(event, card, page, parent){
+        updatePath(card, page){
+            var cardPath = card.path;
+            var cardValue = card.now;
+            var cardId = card.id;
+            var cardTier = card.tier;
+            var pathValues = [];
+            var tier = 0;
+
+            // First reset all children of card to 0 if necessary
+
+            // Then rebuild path
+            mainloop: for (var tier1 in this.cards[page]) {
+                if (this.cards[page][tier1].id == cardPath[tier]) {
+                    var val1 = this.cards[page][tier1].now;
+                    if (cardTier > 2) this.cards[page][tier1].now = 60;
+                    // console.log("tier1 value:", this.cards[page][tier1].now)
+                    // pathValues.push(this.cards[page][tier1].now)
+                    tier++;
+                    if (tier == cardTier) { break mainloop; }
+                    // console.log("loop through tier 2");
+                    for (var tier2 in this.cards[page][tier1]["tier2"]) {
+                        if (this.cards[page][tier1]["tier2"][tier2].id == cardPath[tier]){
+                            var val2 = this.cards[page][tier1]["tier2"][tier2].now;
+                            if (cardTier > 3) this.cards[page][tier1]["tier2"][tier2].now = 60;
+                            if (val2 > 0 && val1 < 30) this.cards[page][tier1].now = 30;
+                            if (val2 >= 30 && val1 < 60) this.cards[page][tier1].now = 60;
+                            // console.log("tier2 value:", this.cards[page][tier1]["tier2"][tier2].now)
+                            // pathValues.push(this.cards[page][tier1]["tier2"][tier2].now);
+                            tier++;
+                            if (tier == cardTier) { break mainloop; }
+                            // console.log("loop through tier 3");
+                            for (var tier3 in this.cards[page][tier1]["tier2"][tier2]["tier3"]) {
+                                if (this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].id == cardPath[tier]){
+                                    var val3 = this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now;
+                                    if (val3 > 0 && val2 < 30) this.cards[page][tier1]["tier2"][tier2].now = 30;
+                                    if (val3 >= 30 && val2 < 60) this.cards[page][tier1]["tier2"][tier2].now = 60;
+                                    // console.log("tier3 value:", this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now)
+                                    // pathValues.push(this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now);
+                                    tier++;
+                                    if (tier == cardTier) { break mainloop; }
+                                    // console.log("loop through tier 4");
+                                    for (var tier4 in this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"]) {
+                                        if (this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"][tier4].id == cardPath[tier]){
+                                            var val4 = this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"][tier4].now;
+                                            if (val4 > 0 && val3 < 30) this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now = 30;
+                                            if (val4 >= 30 && val3 < 60) this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now = 60;
+                                            // console.log("tier4 value:", this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"][tier4].now);
+                                            // pathValues.push(this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"][tier4].now);
+                                            break mainloop;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // console.log("path values:", pathValues);
+        },
+        updateCard: function(event, card, page, parent){
             // value validation
             this.checkValue(event.target.value, card);
-            // check PATH now with parents and update them
 
-            // update the page total
-            if (page !== "minor") {
+            // check PATH now with parents and update path and total
+            if (page === "combat" || page === "crafting") {
+                this.updatePath(card, page);
                 this.updateTotal(page);
             }
+            // maybe don't need parent anymore
         }
     },
     updated(){

@@ -53,6 +53,7 @@
 
         <!-- CRAFTING SECTION -->
         <section id="crafting" v-if="p.crafting.active">
+            <div class="alert alert-primary" role="alert"> <small v-html="help"></small></div>
             <!-- TIER 1 Loop -->
             <div v-for="card in cards.crafting">
                 <div class="card" style="width: 12rem;">
@@ -62,7 +63,7 @@
                         <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
                         <form>
                             <div class="form-group d-flex justify-content-center">
-                                <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @change="updatePath($event, card, 'crafting')">
+                                <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @input="updateCard($event, card, 'crafting')">
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
@@ -81,7 +82,7 @@
                                     <img class="rounded  mx-auto d-block mb-2" v-bind:src="card2.img" alt="Card image cap">
                                     <h5 class="card-title text-center"> <a v-bind:href="card2.wiki"> {{card2.fr}} </a></h5>
                                     <div class="form-group d-flex justify-content-center">
-                                        <input class="form-control" type="number" class="form-check-input"  v-model.prevent="card2.now" @change="updatePath($event, card2, 'crafting', card)">
+                                        <input class="form-control" type="number" class="form-check-input"  v-model.prevent="card2.now" @input="updateCard($event, card2, 'crafting')">
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card2.info">info</button>
@@ -101,7 +102,7 @@
                                         <img class="rounded  mx-auto d-block mb-2" v-bind:src="card3.img" alt="Card image cap">
                                         <h5 class="card-title text-center"> <a v-bind:href="card3.wiki"> {{card3.fr}} </a></h5>
                                         <div class="form-group d-flex justify-content-center">
-                                            <input class="form-control" type="number" class="form-check-input" v-model.prevent="card3.now" @change="updatePath($event, card3, 'crafting', card)">
+                                            <input class="form-control" type="number" class="form-check-input" v-model.prevent="card3.now" @input="updateCard($event, card3, 'crafting')">
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card3.info">info</button>
@@ -121,7 +122,7 @@
                                             <img class="rounded  mx-auto d-block mb-2" v-bind:src="card4.img" alt="Card image cap">
                                             <h5 class="card-title text-center"> <a v-bind:href="card4.wiki"> {{card4.fr}} </a></h5>
                                             <div class="form-group d-flex justify-content-center">
-                                                <input class="form-control" type="number" class="form-check-input" v-model.prevent="card4.now" @change="updatePath($event, card4, 'crafting', card)">
+                                                <input class="form-control" type="number" class="form-check-input" v-model.prevent="card4.now" @input="updateCard($event, card4, 'crafting')">
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card4.info">info</button>
@@ -144,6 +145,7 @@
         <!-- COMBAT SECTION -->
         <section id="combat" v-if="p.combat.active">
             <!-- SECONDARY COMBAT SKILLS -->
+            <h5 class="pb-2">Compétences de combat secondaires:</h5>
             <div class="row">
                 <div v-for="card in cards.secondCombat">
                     <div class="col">
@@ -153,7 +155,7 @@
                                 <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
                                 <form>
                                     <div class="form-group d-flex justify-content-center">
-                                        <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @change="updatePath($event, card, 'combat')">
+                                        <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @input="updateCard($event, card, 'combat')">
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
@@ -165,6 +167,8 @@
                 </div>
             </div>
             <hr></hr>
+            <h5 class="pb-2">Compétences de combat principales:</h5>
+            <div class="alert alert-primary" role="alert"> <small v-html="help"></small></div>
             <!-- TIER 1 Loop -->
             <div v-for="card in cards.combat">
                 <div class="card" style="width: 12rem;">
@@ -174,7 +178,7 @@
                         <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
                         <form>
                             <div class="form-group d-flex justify-content-center">
-                                <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @change="updatePath($event, card, 'combat')">
+                                <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @input="updateCard($event, card, 'combat')">
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
@@ -193,7 +197,7 @@
                                     <img class="rounded  mx-auto d-block mb-2" v-bind:src="card2.img" alt="Card image cap">
                                     <h5 class="card-title text-center"> <a v-bind:href="card2.wiki"> {{card2.fr}} </a></h5>
                                     <div class="form-group d-flex justify-content-center">
-                                        <input class="form-control" type="number" class="form-check-input" v-model.prevent="card2.now" @change="updatePath($event, card2, 'combat', card)">
+                                        <input class="form-control" type="number" class="form-check-input" v-model.prevent="card2.now" @input="updateCard($event, card2, 'combat')">
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card2.info">info</button>
@@ -213,7 +217,7 @@
                                         <img class="rounded  mx-auto d-block mb-2" v-bind:src="card3.img" alt="Card image cap">
                                         <h5 class="card-title text-center"> <a v-bind:href="card3.wiki"> {{card3.fr}} </a></h5>
                                         <div class="form-group d-flex justify-content-center">
-                                            <input class="form-control" type="number" class="form-check-input" v-model.prevent="card3.now" @change="updatePath($event, card3, 'combat', card)">
+                                            <input class="form-control" type="number" class="form-check-input" v-model.prevent="card3.now" @input="updateCard($event, card3, 'combat')">
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card3.info">info</button>
@@ -243,7 +247,7 @@
                                     <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
                                     <form>
                                         <div class="form-group d-flex justify-content-center">
-                                            <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @change="updatePath($event, card, 'combat')">
+                                            <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @input="updateCard($event, card, 'combat')">
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
