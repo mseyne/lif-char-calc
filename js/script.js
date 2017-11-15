@@ -5,6 +5,7 @@
 var app = new Vue({
     el: '#app',
     data: {
+        // Pages
         p:{
             crafting: {fr:"Artisanat", now:0, max:400, active:true},
             combat: {fr:"Combat", now:0, max:400, active:false},
@@ -12,6 +13,7 @@ var app = new Vue({
             stats: {fr: "Statistiques", now:50, max:150, active:false},
             summary: {fr: "Résumé", active:false},
         },
+        // Cards
         cards:{
             // CRAFTING CARD DATA
             crafting: { 
@@ -918,12 +920,73 @@ var app = new Vue({
             stats: {}
         }
     },
+    computed: {
+    },
     methods: {
+        backgroundCard(card, page){
+            return {greenCard: (card.now > 0) && this.p[page].now <= this.p[page].max, redCard: (card.now > 0) && this.p[page].now > this.p[page].max};
+        },
+        totalColor(page){
+            return {greenTotal: (page.now > 0) && (page.now <= page.max), redTotal: (page.now > page.max)};
+        },
         changePage: function(page){
             for (var p in this.p) {
                 this.p[p].active = false
             }
             page.active = true
+        },
+        checkValue: function(val, card){
+            val = Number(val);
+            if (val < 0) {
+                card.now = 0;
+            } else if ( val > 100) {
+                card.now = 100;
+            } else {
+                card.now = val;
+            }
+        },
+        updateTotal: function(page){
+            let total = 0;
+            if (page == 'crafting') {
+                for ( let tier1 in this.cards[page]) {
+                    total += this.cards[page][tier1].now;
+                    for (let tier2 in this.cards[page][tier1]["tier2"]) {
+                        total += this.cards[page][tier1]["tier2"][tier2].now;
+                        for (let tier3 in this.cards[page][tier1]["tier2"][tier2]["tier3"]) {
+                            total += this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now;
+                            for (let tier4 in this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"]) {
+                                total += this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"][tier4].now;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ( page == 'combat') {
+                for ( let tier1 in this.cards[page]) {
+                    total += this.cards[page][tier1].now;
+                    for (let tier2 in this.cards[page][tier1]["tier2"]) {
+                        total += this.cards[page][tier1]["tier2"][tier2].now;
+                        for (let tier3 in this.cards[page][tier1]["tier2"][tier2]["tier3"]) {
+                            total += this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now;
+                        }
+                    }
+                }
+                for ( let node in this.cards["secondCombat"]) {
+                    total += this.cards["secondCombat"][node].now;
+                }
+            }
+            this.p[page].now = total;
+        },
+        updatePath: function(event, card, page, parent){
+            // value validation
+            this.checkValue(event.target.value, card);
+            // check PATH now with parents and update them
+
+            // update the page total
+            if (page !== "minor") {
+                this.updateTotal(page);
+            }
         }
     },
     updated(){

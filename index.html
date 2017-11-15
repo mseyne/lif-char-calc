@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Life is Feudal : Planification de Personnage</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -14,16 +15,16 @@
         <!-- NAV BAR FIXED TOP -->
         <ul class="nav nav-tabs fixed-top navbar-light bg-light pt-2 justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" v-bind:class="{active:p.crafting.active}" v-on:click="changePage(p.crafting)" href="#">{{ p.crafting.fr }} : {{ p.crafting.now }}/{{ p.crafting.max }}</a>
+                <a class="nav-link" v-bind:class="{active:p.stats.active}" v-on:click="changePage(p.stats)" href="#">{{ p.stats.fr }} : {{ p.stats.now }}/{{ p.stats.max }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" v-bind:class="{active:p.combat.active}" v-on:click="changePage(p.combat)" href="#">{{ p.combat.fr }} : {{ p.combat.now }}/{{ p.combat.max }}</a>
+                <a class="nav-link" v-bind:class="{active:p.crafting.active}" v-on:click="changePage(p.crafting)" href="#">{{ p.crafting.fr }} : <span :class="totalColor(p.crafting)">{{ p.crafting.now }}/{{ p.crafting.max }}</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" v-bind:class="{active:p.combat.active}" v-on:click="changePage(p.combat)" href="#">{{ p.combat.fr }} : <span :class="totalColor(p.combat)">{{ p.combat.now }}/{{ p.combat.max }}</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" v-bind:class="{active:p.minor.active}" v-on:click="changePage(p.minor)" href="#">{{ p.minor.fr }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" v-bind:class="{active:p.stats.active}" v-on:click="changePage(p.stats)" href="#">{{ p.stats.fr }} : {{ p.stats.now }}/{{ p.stats.max }}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" v-bind:class="{active:p.summary.active}" v-on:click="changePage(p.summary)" href="#">{{ p.summary.fr }}</a>
@@ -38,19 +39,30 @@
         <h1 class="text-center">Planification de Personnage</h1>
         <h2 class="text-center"> <small class="text-muted">Life is Feudal MMO</small></h2>
         <hr>
+        
+        <!-- STATISTICS SECTION -->
+        <section id="stats" v-if="p.stats.active">
+                <h2 class="display-3">{{ p.stats.fr }}</h2>
+                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <hr class="my-4">
+                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                </p>
+        </section>
 
         <!-- CRAFTING SECTION -->
         <section id="crafting" v-if="p.crafting.active">
             <!-- TIER 1 Loop -->
             <div v-for="card in cards.crafting">
                 <div class="card" style="width: 12rem;">
-                    <div class="card-body">
+                    <div class="card-body" :class="backgroundCard(card, 'crafting')">
                         <span class="badge badge-dark">Tier I</span>
                         <img class="rounded  mx-auto d-block mb-2" v-bind:src="card.img" alt="Card image cap">
                         <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
                         <form>
                             <div class="form-group d-flex justify-content-center">
-                                <input class="form-control" type="number" class="form-check-input" v-bind:value="card.now">
+                                <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @change="updatePath($event, card, 'crafting')">
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
@@ -64,12 +76,12 @@
                         <div class="col-1"></div>
                         <div class="col-11">
                             <div class="card mt-4" style="width: 12rem;" >
-                                <div class="card-body">
+                                <div class="card-body" :class="backgroundCard(card2, 'crafting')">
                                     <span class="badge badge-dark">Tier II</span>
                                     <img class="rounded  mx-auto d-block mb-2" v-bind:src="card2.img" alt="Card image cap">
                                     <h5 class="card-title text-center"> <a v-bind:href="card2.wiki"> {{card2.fr}} </a></h5>
                                     <div class="form-group d-flex justify-content-center">
-                                        <input class="form-control" type="number" class="form-check-input" v-bind:value="card2.now">
+                                        <input class="form-control" type="number" class="form-check-input"  v-model.prevent="card2.now" @change="updatePath($event, card2, 'crafting', card)">
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card2.info">info</button>
@@ -84,12 +96,12 @@
                             <div class="col-2"></div>
                             <div class="col-10">
                                 <div class="card mt-4" style="width: 12rem;" >
-                                    <div class="card-body">
+                                    <div class="card-body" :class="backgroundCard(card3, 'crafting')">
                                         <span class="badge badge-dark">Tier III</span>
                                         <img class="rounded  mx-auto d-block mb-2" v-bind:src="card3.img" alt="Card image cap">
                                         <h5 class="card-title text-center"> <a v-bind:href="card3.wiki"> {{card3.fr}} </a></h5>
                                         <div class="form-group d-flex justify-content-center">
-                                            <input class="form-control" type="number" class="form-check-input" v-bind:value="card3.now">
+                                            <input class="form-control" type="number" class="form-check-input" v-model.prevent="card3.now" @change="updatePath($event, card3, 'crafting', card)">
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card3.info">info</button>
@@ -104,12 +116,12 @@
                             <div v-for="card4 in card3.tier4">
                                 <div class="col-9">
                                     <div class="card mt-4" style="width: 12rem;" >
-                                        <div class="card-body">
+                                        <div class="card-body" :class="backgroundCard(card4, 'crafting')">
                                             <span class="badge badge-dark">Tier IV</span>
                                             <img class="rounded  mx-auto d-block mb-2" v-bind:src="card4.img" alt="Card image cap">
                                             <h5 class="card-title text-center"> <a v-bind:href="card4.wiki"> {{card4.fr}} </a></h5>
                                             <div class="form-group d-flex justify-content-center">
-                                                <input class="form-control" type="number" class="form-check-input" v-bind:value="card4.now">
+                                                <input class="form-control" type="number" class="form-check-input" v-model.prevent="card4.now" @change="updatePath($event, card4, 'crafting', card)">
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card4.info">info</button>
@@ -136,12 +148,12 @@
                 <div v-for="card in cards.secondCombat">
                     <div class="col">
                         <div class="card mb-2" style="width: 12rem;">
-                            <div class="card-body">
+                            <div class="card-body" :class="backgroundCard(card, 'combat')">
                                 <img class="rounded  mx-auto d-block mb-2" v-bind:src="card.img" alt="Card image cap">
                                 <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
                                 <form>
                                     <div class="form-group d-flex justify-content-center">
-                                        <input class="form-control" type="number" class="form-check-input" v-bind:value="card.now">
+                                        <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @change="updatePath($event, card, 'combat')">
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
@@ -156,13 +168,13 @@
             <!-- TIER 1 Loop -->
             <div v-for="card in cards.combat">
                 <div class="card" style="width: 12rem;">
-                    <div class="card-body">
+                    <div class="card-body" :class="backgroundCard(card, 'combat')">
                         <span class="badge badge-dark">Tier I</span>
                         <img class="rounded  mx-auto d-block mb-2" v-bind:src="card.img" alt="Card image cap">
                         <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
                         <form>
                             <div class="form-group d-flex justify-content-center">
-                                <input class="form-control" type="number" class="form-check-input" v-bind:value="card.now">
+                                <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @change="updatePath($event, card, 'combat')">
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
@@ -176,12 +188,12 @@
                         <div class="col-1"></div>
                         <div class="col-11">
                             <div class="card mt-4" style="width: 12rem;" >
-                                <div class="card-body">
+                                <div class="card-body" :class="backgroundCard(card2, 'combat')">
                                     <span class="badge badge-dark">Tier II</span>
                                     <img class="rounded  mx-auto d-block mb-2" v-bind:src="card2.img" alt="Card image cap">
                                     <h5 class="card-title text-center"> <a v-bind:href="card2.wiki"> {{card2.fr}} </a></h5>
                                     <div class="form-group d-flex justify-content-center">
-                                        <input class="form-control" type="number" class="form-check-input" v-bind:value="card2.now">
+                                        <input class="form-control" type="number" class="form-check-input" v-model.prevent="card2.now" @change="updatePath($event, card2, 'combat', card)">
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card2.info">info</button>
@@ -196,12 +208,12 @@
                             <div class="col-2"></div>
                             <div class="col-10">
                                 <div class="card mt-4" style="width: 12rem;" >
-                                    <div class="card-body">
+                                    <div class="card-body" :class="backgroundCard(card3, 'combat')">
                                         <span class="badge badge-dark">Tier III</span>
                                         <img class="rounded  mx-auto d-block mb-2" v-bind:src="card3.img" alt="Card image cap">
                                         <h5 class="card-title text-center"> <a v-bind:href="card3.wiki"> {{card3.fr}} </a></h5>
                                         <div class="form-group d-flex justify-content-center">
-                                            <input class="form-control" type="number" class="form-check-input" v-bind:value="card3.now">
+                                            <input class="form-control" type="number" class="form-check-input" v-model.prevent="card3.now" @change="updatePath($event, card3, 'combat', card)">
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card3.info">info</button>
@@ -226,12 +238,12 @@
                     <div v-for="card in cards.minor">
                         <div class="col">
                             <div class="card mb-4" style="width: 12rem;">
-                                <div class="card-body">
+                                <div class="card-body"  :class="{greenCard: (card.now > 0)}">
                                     <img class="rounded  mx-auto d-block mb-2" v-bind:src="card.img" alt="Card image cap">
                                     <h5 class="card-title text-center"> <a v-bind:href="card.wiki"> {{card.fr}} </a></h5>
                                     <form>
                                         <div class="form-group d-flex justify-content-center">
-                                            <input class="form-control" type="number" class="form-check-input" v-bind:value="card.now">
+                                            <input class="form-control" type="number" class="form-check-input" v-model.prevent="card.now" @change="updatePath($event, card, 'combat')">
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <button type="button" class="btn btn-lg btn-danger py-0 m-0" data-container="body" data-toggle="popover" data-placement="right" v-bind:data-content="card.info">info</button>
@@ -242,17 +254,6 @@
                         </div>
                     </div>
                 </div>
-        </section>
-
-        <!-- STATISTICS SECTION -->
-        <section id="stats" v-if="p.stats.active">
-                <h2 class="display-3">{{ p.stats.fr }}</h2>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                </p>
         </section>
 
         <!-- SUMMARY SECTION -->
@@ -267,7 +268,7 @@
         </section>
         
         <!-- FOOTER -->
-        <p class="m-0 pb-3 text-muted text-center"><small>Made with <span class="text-danger">&lt;3</span> by MSeyne - Source: Github - GPL Licence Libre</small></p>
+        <p class="m-0 pb-3 text-muted text-center"><small>Made with <span class="text-danger"><i class="fa fa-heart" aria-hidden="true"></i></span> by MSeyne - Source: <a href="https://github.com/mseyne/lif-char-calc" class="footerLink">Github</a> - Licence Libre <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"  class="footerLink">GPL</a></small></p>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
