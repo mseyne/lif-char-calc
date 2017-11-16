@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico"/>
     <title>Life is Feudal : Planification de Personnage</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,7 +16,7 @@
         <!-- NAV BAR FIXED TOP -->
         <ul class="nav nav-tabs fixed-top navbar-light bg-light pt-2 justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" v-bind:class="{active:p.stats.active}" v-on:click="changePage(p.stats)" href="#">{{ p.stats.fr }} : {{ p.stats.now }}/{{ p.stats.max }}</a>
+                <a class="nav-link" v-bind:class="{active:p.stats.active}" v-on:click="changePage(p.stats)" href="#">{{ p.stats.fr }} : <span :class="totalColor(p.stats)">{{ p.stats.now }}/{{ p.stats.max }}</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" v-bind:class="{active:p.crafting.active}" v-on:click="changePage(p.crafting)" href="#">{{ p.crafting.fr }} : <span :class="totalColor(p.crafting)">{{ p.crafting.now }}/{{ p.crafting.max }}</span></a>
@@ -42,13 +43,24 @@
         
         <!-- STATISTICS SECTION -->
         <section id="stats" v-if="p.stats.active">
-                <h2 class="display-3">{{ p.stats.fr }}</h2>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                </p>
+                <div class="alert alert-primary" role="alert"> <small v-html="helpStats"></small></div>
+                <div class="row">
+                    <div class="col">
+                        <div v-for="stat in stats.main" class="m-3">
+                            <div class="input-group  m-1">
+                                <span class="input-group-addon" :id="'stat' + stat.id"><b>{{ stat.fr }}</b></span>
+                                <input type="number" class="form-control" :aria-label="stat.fr" :aria-describedby="'stat' + stat.id" v-model="stat.now" @input="updateStats(stat)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <ul class="list-group mb-3">
+                        <div v-for="stat in stats.second">
+                            <li class="list-group-item m-1"> {{ stat.fr }} : <strong>{{ stat.now }}</strong> <small>({{ stat.from }})</small> </li>
+                        </div>
+                        </ul>
+                    </div>
+                </div>
         </section>
 
         <!-- CRAFTING SECTION -->
@@ -262,12 +274,18 @@
 
         <!-- SUMMARY SECTION -->
         <section id="summary" v-if="p.summary.active">
+                <div class="alert alert-danger" role="alert">
+                  Votre personnage n'est pas valide, trop de points ont été distribué.
+                </div>
+                <div class="alert alert-success" role="alert">
+                  Vous pouvez faire un screenshot ou télécharger une version html de votre personnage.
+                </div>
                 <h2 class="display-3">{{ p.summary.fr }}</h2>
                 <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
                 <hr class="my-4">
                 <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
                 <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                    <a class="btn btn-primary btn-lg" href="./fiche.html" role="button" download>Download</a>
                 </p>
         </section>
         

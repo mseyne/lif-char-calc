@@ -11,6 +11,7 @@ var app = new Vue({
         jusqu'à 29, Il faut un minimum de 60 points à tous les tiers précédents pour ajouter des points au delà de 29.\
         <br> <b>Exemple</b>: (Tier1: 30, Tier2: 29) - (Tier1:60, Tier2:30, Tier:3:29) - (Tier1: 60, Tier2:60, Tier3:60, Tier4:100)\
         <br> <b>Méthode</b>: Vous pouvez définir la compétence que vous souhaitez monter, les point de dépendance minimum de tiers parents seront mise à jour automatiquement.",
+        helpStats:"<b>Explication</b>: Le total des statistiques est limité à 150 et ne peut être inférieur à 10. Une seule statistique peut donc monter à 110 au maximum.",
         // Pages
         p:{
             crafting: {fr:"Artisanat", now:0, max:400, active:true},
@@ -1038,9 +1039,70 @@ var app = new Vue({
                     now:0,
                     max:100
                     },
+                }
+        },
+        stats:{
+            main: {
+                strength:{
+                    fr:"Force",
+                    id:0,
+                    now: 10,
+                    max: 110
                 },
-            stats: {}
+                agility:{
+                    fr:"Agilité",
+                    id:1,
+                    now: 10,
+                    max: 110
+                },
+                constitution:{
+                    fr:"Constitution",
+                    id:2,
+                    now: 10,
+                    max: 110
+                },
+                willpower:{
+                    fr:"Volonté",
+                    id:3,
+                    now: 10,
+                    max: 110
+                },
+                Intellect:{
+                    fr:"Intelligence",
+                    id:4,
+                    now: 10,
+                    max: 110
+                }
+            },
+            second: {
+                life:{
+                    fr:"Points de vie",
+                    from:"Constitution",
+                    now: 100,
+                },
+                stamina:{
+                    fr:"Points d'endurance",
+                    from:"Volonté",
+                    now:100,
+                },
+                inventory:{
+                    fr:"Capacité d'inventaire",
+                    from:"Volonté",
+                    now:120
+                },
+                skillcap:{
+                    fr:"Points bonus aux compétences",
+                    from:"Intelligence",
+                    now:0
+                },
+                equipment:{
+                    fr:"Capacité à porter l'équiment",
+                    from:"Constitution et Force",
+                    now:20
+                }
+            }
         }
+
     },
     computed: {
     },
@@ -1049,6 +1111,7 @@ var app = new Vue({
             return {greenCard: (card.now > 0) && this.p[page].now <= this.p[page].max, redCard: (card.now > 0) && this.p[page].now > this.p[page].max};
         },
         totalColor(page){
+            console.log(page);
             return {greenTotal: (page.now > 0) && (page.now <= page.max), redTotal: (page.now > page.max)};
         },
         changePage: function(page){
@@ -1057,7 +1120,7 @@ var app = new Vue({
             }
             page.active = true;
         },
-        checkValue: function(val, card){
+        checkSkillValue: function(val, card){
             val = Number(val);
             if (val < 0) {
                 card.now = 0;
@@ -1105,11 +1168,38 @@ var app = new Vue({
             var cardValue = card.now;
             var cardId = card.id;
             var cardTier = card.tier;
-            var pathValues = [];
+            // var pathValues = [];
+
+            // First reset all children of card to 0
+            var flag = false;
+            for (var tier1 in this.cards[page]) {
+                if (this.cards[page][tier1].id == cardId) {
+                    flag = true;
+                }
+                for (var tier2 in this.cards[page][tier1]["tier2"]) {
+                    if (flag) {
+                        this.cards[page][tier1]["tier2"][tier2].now = 0;
+                    }
+                    if (this.cards[page][tier1]["tier2"][tier2].id == cardId){
+                        flag = true;
+                    }
+                    for (var tier3 in this.cards[page][tier1]["tier2"][tier2]["tier3"]) {
+                        if (flag) {
+                            this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now = 0;
+                        }
+                        if (this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].id == cardId){
+                            flag = true;
+                        }
+                        for (var tier4 in this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"]) {
+                            if (flag) {
+                                this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"][tier4].now = 0;
+                            }
+                        }
+                    }
+                }
+            }
+
             var tier = 0;
-
-            // First reset all children of card to 0 if necessary
-
             // Then rebuild path
             mainloop: for (var tier1 in this.cards[page]) {
                 if (this.cards[page][tier1].id == cardPath[tier]) {
@@ -1161,7 +1251,7 @@ var app = new Vue({
         },
         updateCard: function(event, card, page, parent){
             // value validation
-            this.checkValue(event.target.value, card);
+            this.checkSkillValue(event.target.value, card);
 
             // check PATH now with parents and update path and total
             if (page === "combat" || page === "crafting") {
@@ -1169,6 +1259,61 @@ var app = new Vue({
                 this.updateTotal(page);
             }
             // maybe don't need parent anymore
+        },
+        checkStatValue(stat){
+            var value = Number(stat.now);
+            if (value < 10) {
+                stat.now = 10
+            } if (value > 110 )
+            stat.now = 110;
+        },
+        updateStats: function(stat){
+            var global = this;
+            setTimeout( function(){
+                // check if valid value betwen 10 and 110
+                global.checkStatValue(stat)
+                // update the secondary related stats
+                switch(stat.id){
+                    case 0:
+                        // Force Modificateurs
+                        global.modifierEquipment()
+                        break;
+                    case 2:
+                        // Constitution Modificateurs
+                        var bonusLife = stat.now - 10;
+                        global.stats.second.life.now = 100 + bonusLife;
+                        global.modifierEquipment()
+                        break;
+                    case 3:
+                        // Volonté Modificateurs
+                        var bonusEndurance = stat.now - 10;
+                        var bonusInventaire = (stat.now - 10) * 2;
+                        global.stats.second.stamina.now = 100 + bonusEndurance;
+                        global.stats.second.inventory.now = 120 + bonusInventaire;
+                        break;
+                    case 4:
+                        // Intelligence Modificateurs
+                        var bonus = (stat.now - 10) * 2;
+                        global.stats.second.skillcap.now = bonus;
+                        global.p.crafting.max = 400 + bonus;
+                        global.p.combat.max = 400 + bonus;
+                        break;
+                }
+                // update total of page 0/150
+                global.updateStatsTotal();
+            }, 500);
+        },
+        modifierEquipment: function(){
+            var bonusForce = (this.stats.main.strength.now - 10) / 2;
+            var bonusConstitution = (this.stats.main.constitution.now - 10) / 2;
+            this.stats.second.equipment.now = 20 + bonusConstitution + bonusForce;
+        },
+        updateStatsTotal(){
+            var total = 0;
+            for (var stat in this.stats.main) {
+                total += Number(this.stats.main[stat].now);
+            }
+            this.p.stats.now = total;
         }
     },
     updated(){
@@ -1178,7 +1323,7 @@ var app = new Vue({
                 html: true
             })
           })
-    }
+    },
 })
 
 $(function () {
