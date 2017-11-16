@@ -5,6 +5,8 @@
 var app = new Vue({
     el: '#app',
     data: {
+        name:"Nom du Personnage",
+        save:true,
         // Help
         help:"<b>Explication</b>: Le nombre de point maximun pour un Tier est de 100, à partir du Tier 2, \
         Il faut un minimum de 30 points au Tier précédent direct pour ajouter des points \
@@ -1111,8 +1113,7 @@ var app = new Vue({
             return {greenCard: (card.now > 0) && this.p[page].now <= this.p[page].max, redCard: (card.now > 0) && this.p[page].now > this.p[page].max};
         },
         totalColor(page){
-            console.log(page);
-            return {greenTotal: (page.now > 0) && (page.now <= page.max), redTotal: (page.now > page.max)};
+            return {blueTotal: (page.now > 0) && (page.now < page.max), redTotal: (page.now > page.max), greenTotal: (page.now == page.max)};
         },
         changePage: function(page){
             for (var p in this.p) {
@@ -1314,6 +1315,16 @@ var app = new Vue({
                 total += Number(this.stats.main[stat].now);
             }
             this.p.stats.now = total;
+        },
+        downloadDoc(){
+            this.save = false;
+            setTimeout(() => {
+                var html = document.documentElement.outerHTML;
+                var dataURI = 'data:text/html,' + encodeURIComponent(html);
+                var blob = new Blob([html], {type: "text/html;charset=utf-8"});
+                saveAs(blob, "fiche.html");
+                this.save = true;
+            }, 10)
         }
     },
     updated(){
@@ -1323,7 +1334,7 @@ var app = new Vue({
                 html: true
             })
           })
-    },
+    }
 })
 
 $(function () {
