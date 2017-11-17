@@ -1103,8 +1103,8 @@ var app = new Vue({
                     now:20
                 }
             }
-        }
-
+        },
+        updateTimer:0
     },
     computed: {
     },
@@ -1166,34 +1166,86 @@ var app = new Vue({
         },
         updatePath(card, page){
             var cardPath = card.path;
-            var cardValue = card.now;
             var cardId = card.id;
             var cardTier = card.tier;
             // var pathValues = [];
 
-            // First reset all children of card to 0
-            var flag = false;
-            for (var tier1 in this.cards[page]) {
-                if (this.cards[page][tier1].id == cardId) {
-                    flag = true;
-                }
-                for (var tier2 in this.cards[page][tier1]["tier2"]) {
-                    if (flag) {
-                        this.cards[page][tier1]["tier2"][tier2].now = 0;
-                    }
-                    if (this.cards[page][tier1]["tier2"][tier2].id == cardId){
-                        flag = true;
-                    }
-                    for (var tier3 in this.cards[page][tier1]["tier2"][tier2]["tier3"]) {
-                        if (flag) {
-                            this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].now = 0;
+            // descendant check
+            var modifiedCard = false;
+            // TIER 1 PATH to MODIFIED CARD
+            for (card in this.cards[page]) {
+                var val1 = this.cards[page][card].now;
+                if (this.cards[page][card].id == cardId) {
+                    modifiedCard = true;
+                    // console.log("all the child from this modifiedCard tier 1 are checked")
+                    // CHECK HERE CHILDRENS
+                    for (var card2 in this.cards[page][card]["tier2"]) {
+                        var val2 = this.cards[page][card]["tier2"][card2].now;
+                        if (val2 >= 30 && val1 < 60 && val1 >= 30) {
+                            this.cards[page][card]["tier2"][card2].now = 29;
                         }
-                        if (this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3].id == cardId){
-                            flag = true;
+                        if (val1 < 30) this.cards[page][card]["tier2"][card2].now = 0;
+                        val2 = this.cards[page][card]["tier2"][card2].now;
+                        for (var card3 in this.cards[page][card]["tier2"][card2]["tier3"]) {
+                            var val3 = this.cards[page][card]["tier2"][card2]["tier3"][card3].now;
+                            if (val3 >= 30 && val2 < 60 && val2 >= 30) {
+                                this.cards[page][card]["tier2"][card2]["tier3"][card3].now = 29;
+                            }
+                            if (val2 < 30) this.cards[page][card]["tier2"][card2]["tier3"][card3].now = 0;
+                            val3 = this.cards[page][card]["tier2"][card2]["tier3"][card3].now;
+                            for (var card4 in this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"]) {
+                                var val4 = this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"][card4].now;
+                                if (val4 >= 30 && val3 < 60 && val3 >= 30) {
+                                    this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"][card4].now = 29;
+                                }
+                                if (val3 < 30) this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"][card4].now = 0;
+4                         }
                         }
-                        for (var tier4 in this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"]) {
-                            if (flag) {
-                                this.cards[page][tier1]["tier2"][tier2]["tier3"][tier3]["tier4"][tier4].now = 0;
+                    }
+                } 
+                // continue the path to find modified card
+                // TIER 2 PATH to MODIFIED CARD
+                if (this.cards[page][card].id == cardPath[0] && !modifiedCard) {
+                    // console.log("right card tier 1 on path but not modifiedCard", val1);
+                    for (var card2 in this.cards[page][card]["tier2"]) {
+                        var val2 = this.cards[page][card]["tier2"][card2].now;
+                        if (this.cards[page][card]["tier2"][card2].id == cardId) {
+                            modifiedCard = true;
+                            // console.log("all the child from this modifiedCard tier 2 are checked")
+                            // CHECK HERE CHILDRENS
+                            for (var card3 in this.cards[page][card]["tier2"][card2]["tier3"]) {
+                                var val3 = this.cards[page][card]["tier2"][card2]["tier3"][card3].now;
+                                if (val3 >= 30 && val2 < 60 && val2 >= 30) {
+                                    this.cards[page][card]["tier2"][card2]["tier3"][card3].now = 29;
+                                }
+                                if (val2 < 30) this.cards[page][card]["tier2"][card2]["tier3"][card3].now = 0;
+                                val3 = this.cards[page][card]["tier2"][card2]["tier3"][card3].now;
+                                for (var card4 in this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"]) {
+                                    var val4 = this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"][card4].now;
+                                    if (val4 >= 30 && val3 < 60 && val3 >= 30) {
+                                        this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"][card4].now = 29;
+                                    }
+                                    if (val3 < 30) this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"][card4].now = 0;
+    4                           }
+                            }
+                        } 
+                        // TIER 2 PATH to MODIFIED CARD
+                        if (this.cards[page][card]["tier2"][card2].id == cardPath[1] && !modifiedCard) {
+                            // console.log("right card tier 2 on path but not modifiedCard", val2);
+                            for (var card3 in this.cards[page][card]["tier2"][card2]["tier3"]) {
+                                var val3 = this.cards[page][card]["tier2"][card2]["tier3"][card3].now;
+                                if (this.cards[page][card]["tier2"][card2]["tier3"][card3].id == cardId) {
+                                    modifiedCard = true;
+                                    // console.log("all the child from this modifiedCard tier 3 are checked")
+                                    // CHECK HERE CHILDRENS
+                                    for (var card4 in this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"]) {
+                                        var val4 = this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"][card4].now;
+                                        if (val4 >= 30 && val3 < 60 && val3 >= 30) {
+                                            this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"][card4].now = 29;
+                                        }
+                                        if (val3 < 30) this.cards[page][card]["tier2"][card2]["tier3"][card3]["tier4"][card4].now = 0;
+        4                           }
+                                }
                             }
                         }
                     }
@@ -1201,11 +1253,11 @@ var app = new Vue({
             }
 
             var tier = 0;
-            // Then rebuild path
+            // acendant check
             mainloop: for (var tier1 in this.cards[page]) {
                 if (this.cards[page][tier1].id == cardPath[tier]) {
                     var val1 = this.cards[page][tier1].now;
-                    if (cardTier > 2) this.cards[page][tier1].now = 60;
+                    if (cardTier > 2 && val1 < 60) this.cards[page][tier1].now = 60;
                     // console.log("tier1 value:", this.cards[page][tier1].now)
                     // pathValues.push(this.cards[page][tier1].now)
                     tier++;
@@ -1214,7 +1266,7 @@ var app = new Vue({
                     for (var tier2 in this.cards[page][tier1]["tier2"]) {
                         if (this.cards[page][tier1]["tier2"][tier2].id == cardPath[tier]){
                             var val2 = this.cards[page][tier1]["tier2"][tier2].now;
-                            if (cardTier > 3) this.cards[page][tier1]["tier2"][tier2].now = 60;
+                            if (cardTier > 3 && val2 < 60) this.cards[page][tier1]["tier2"][tier2].now = 60;
                             if (val2 > 0 && val1 < 30) this.cards[page][tier1].now = 30;
                             if (val2 >= 30 && val1 < 60) this.cards[page][tier1].now = 60;
                             // console.log("tier2 value:", this.cards[page][tier1]["tier2"][tier2].now)
@@ -1253,12 +1305,18 @@ var app = new Vue({
         updateCard: function(event, card, page, parent){
             // value validation
             this.checkSkillValue(event.target.value, card);
+            
 
+            clearTimeout(this.updateTimer);
+
+            var global = this;
             // check PATH now with parents and update path and total
-            if (page === "combat" || page === "crafting") {
-                this.updatePath(card, page);
-                this.updateTotal(page);
-            }
+            this.updateTimer = setTimeout(function(){
+                if (page === "combat" || page === "crafting") {
+                    global.updatePath(card, page);
+                    global.updateTotal(page);
+                }
+            }, 500);
             // maybe don't need parent anymore
         },
         checkStatValue(stat){
