@@ -44,6 +44,10 @@
         <!-- STATISTICS SECTION -->
         <section id="stats" v-if="p.stats.active">
                 <div class="alert alert-primary" role="alert"> <small v-html="helpStats"></small></div>
+                <label for="nomperso"><b>Nom du personnage</b>:</label>
+                <div class="input-group" v-if="save">
+                    <input type="text" id="nomperso" class="form-control mb-2" v-model="name" placeholder="Sans Nom">
+                </div>
                 <div class="row">
                     <div class="col">
                         <div v-for="stat in stats.main" class="m-3">
@@ -84,7 +88,7 @@
                     </div>
                 </div>
                 <!-- TIER 2 Loop -->
-                <div v-for="card2 in card.tier2">
+                <div v-for="card2 in card.tier2" class="tier2">
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-11">
@@ -104,7 +108,7 @@
                         </div>
                     </div>
                     <!-- TIER 3 Loop -->
-                    <div v-for="card3 in card2.tier3">
+                    <div v-for="card3 in card2.tier3" class="tier3">
                         <div class="row">
                             <div class="col-2"></div>
                             <div class="col-10">
@@ -126,7 +130,7 @@
                         <!-- TIER 4 Loop -->
                         <div class="row">
                             <div class="col-3"></div>
-                            <div v-for="card4 in card3.tier4">
+                            <div v-for="card4 in card3.tier4" class="tier4">
                                 <div class="col-9">
                                     <div class="card mt-4" style="width: 12rem;" >
                                         <div class="card-body" :class="backgroundCard(card4, 'crafting')">
@@ -280,32 +284,31 @@
                 <div class="alert alert-primary" role="alert" v-else-if="(p.crafting.now < p.crafting.max) || (p.combat.now < p.combat.max) || (p.stats.now < p.stats.max)">
                   Votre personnage n'est pas terminé, il vous reste des points a distribuer.
                 </div>
+
                 <div v-else>
                     <div class="alert alert-success" role="alert" v-if="save">
                         Vous pouvez faire un screenshot ou télécharger une version html de votre personnage.
                     </div>
                     <!-- FICHE -->
                     <div id="fiche">
-                        <div>
-                            <div class="input-group" v-if="save">
-                                <input type="text" class="form-control" :placeholder="name" v-model="name">
+                            <div>
+                                <h1 class="text-center my-4">{{ name !== "" ? name : 'Sans Nom'}}</h1>
                             </div>
-                            <h1 class="text-center my-4">{{ name }}</h1>
-                        </div>
                         <div class="row">
                             <div class="col">
                                 <h4>Statistiques:</h4>
                                 <ul class="list-group" v-for="stat in stats.main">
                                     <li class="list-group-item my-1"> {{ stat.fr }} : {{ stat.now }} </li>
                                 </ul>
+                                <hr>
                                 <ul class="list-group mb-3">
                                     <div v-for="stat in stats.second">
-                                        <li class="list-group-item m-1"> {{ stat.fr }} : <strong>{{ stat.now }}</strong> <small>({{ stat.from }})</small> </li>
+                                        <li class="list-group-item m-1"> {{ stat.fr }} : <strong>{{ stat.now }}</strong></li>
                                     </div>
                                 </ul>
                             </div>
                             <div class="col">
-                                <h4>Compétences d'artisanat:</h4>
+                                <h4 class="mt-2">Compétences d'artisanat:</h4>
                                 <ul class="list-group" v-for="card in cards.crafting">
                                     <li class="list-group-item my-1" v-if="card.now > 0"><span class="badge badge-secondary">tier: {{ card.tier }}</span> <b>{{ card.fr }}</b> : {{ card.now }} </li>
                                     <span v-for="card2 in card.tier2">
@@ -318,7 +321,7 @@
                                             </span>
                                     </span>
                                 </ul>
-                                <h4>Compétences de combat:</h4>
+                                <h4 class="mt-2">Compétences de combat:</h4>
                                 <ul class="list-group" v-for="card in cards.secondCombat">
                                     <li class="list-group-item my-1" v-if="card.now > 0"> <b>{{ card.fr }}</b> : {{ card.now }} </li>
                                 </ul>
@@ -331,7 +334,7 @@
                                         </span>
                                     </span>
                                 </ul>
-                                <h4>Compétences mineures:</h4>
+                                <h4 class="mt-2">Compétences mineures:</h4>
                                 <ul class="list-group" v-for="card in cards.minor">
                                     <li class="list-group-item my-1" v-if="card.now > 0"> <b>{{ card.fr }}</b> : {{ card.now }} </li>
                                 </ul>

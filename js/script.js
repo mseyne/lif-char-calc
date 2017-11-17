@@ -5,7 +5,7 @@
 var app = new Vue({
     el: '#app',
     data: {
-        name:"Nom du Personnage",
+        name:"",
         save:true,
         // Help
         help:"<b>Explication</b>: Le nombre de point maximun pour un Tier est de 100, à partir du Tier 2, \
@@ -16,10 +16,10 @@ var app = new Vue({
         helpStats:"<b>Explication</b>: Le total des statistiques est limité à 150 et ne peut être inférieur à 10. Une seule statistique peut donc monter à 110 au maximum.",
         // Pages
         p:{
-            crafting: {fr:"Artisanat", now:0, max:400, active:true},
+            crafting: {fr:"Artisanat", now:0, max:400, active:false},
             combat: {fr:"Combat", now:0, max:400, active:false},
             minor: {fr:"Compétences mineures", active:false},
-            stats: {fr: "Statistiques", now:50, max:150, active:false},
+            stats: {fr: "Statistiques", now:50, max:150, active:true},
             summary: {fr: "Résumé", active:false},
         },
         // Cards
@@ -1303,15 +1303,12 @@ var app = new Vue({
             // console.log("path values:", pathValues);
         },
         updateCard: function(event, card, page, parent){
-            // value validation
-            this.checkSkillValue(event.target.value, card);
-            
-
             clearTimeout(this.updateTimer);
-
             var global = this;
             // check PATH now with parents and update path and total
             this.updateTimer = setTimeout(function(){
+                // value validation
+                global.checkSkillValue(event.target.value, card);
                 if (page === "combat" || page === "crafting") {
                     global.updatePath(card, page);
                     global.updateTotal(page);
