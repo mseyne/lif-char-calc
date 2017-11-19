@@ -18,7 +18,7 @@ var app = new Vue({
         p:{
             crafting: {fr:"Artisanat", now:0, max:400, active:false},
             combat: {fr:"Combat", now:0, max:400, active:false},
-            minor: {fr:"Compétences mineures", active:false},
+            minor: {fr:"Compétences mineures", now:0, max:400, active:false},
             stats: {fr: "Statistiques", now:50, max:150, active:true},
             summary: {fr: "Résumé", active:false},
         },
@@ -392,23 +392,6 @@ var app = new Vue({
                                             max:100
                                         }
                                     }
-                                },
-                                forestry: {
-                                    tier:3,
-                                    id:6,
-                                    path:[11, 12, 6],
-                                    fr: "Foresterie",
-                                    img:"./assets/crafting/Forestry.png",
-                                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Foresterie",
-                                    info:"<h3 class='text-center'>Foresterie</h3>\
-                                    </p><b>Tout niveau</b>: Qualité maximale des pousses cueillies et des arbres plantés.</p>\
-                                    </p><b>0</b>: Vous pouvez récolter des pousses d'arbre.</p>\
-                                    </p><b>30</b>: Vous pouvez planter des arbres au bois tendre (Pins et sapins).</p>\
-                                    </p><b>60</b>: 	Vous pouvez planter les arbres à bois dur de petites tailles (bouleaux et peupliers).</p>\
-                                    </p><b>90</b>: Vous pouvez planter les arbres à bois dur (ormes, érables et chênes).</p>\
-                                    </p><b>100</b>: Bonus permanent de 5 en chance lors de l'utilisation des capacités de foresterie.</p>",
-                                    now:0,
-                                    max:100
                                 }
                             }
                         }, 
@@ -429,6 +412,23 @@ var app = new Vue({
                             now:0,
                             max:100,
                             tier3:{
+                                forestry: {
+                                    tier:3,
+                                    id:6,
+                                    path:[11, 21, 6],
+                                    fr: "Foresterie",
+                                    img:"./assets/crafting/Forestry.png",
+                                    wiki:"https://lifeisfeudal-fr.gamepedia.com/Foresterie",
+                                    info:"<h3 class='text-center'>Foresterie</h3>\
+                                    </p><b>Tout niveau</b>: Qualité maximale des pousses cueillies et des arbres plantés.</p>\
+                                    </p><b>0</b>: Vous pouvez récolter des pousses d'arbre.</p>\
+                                    </p><b>30</b>: Vous pouvez planter des arbres au bois tendre (Pins et sapins).</p>\
+                                    </p><b>60</b>: 	Vous pouvez planter les arbres à bois dur de petites tailles (bouleaux et peupliers).</p>\
+                                    </p><b>90</b>: Vous pouvez planter les arbres à bois dur (ormes, érables et chênes).</p>\
+                                    </p><b>100</b>: Bonus permanent de 5 en chance lors de l'utilisation des capacités de foresterie.</p>",
+                                    now:0,
+                                    max:100
+                                },
                                 advfarming: {
                                     tier:3,
                                     id:32,
@@ -1162,6 +1162,13 @@ var app = new Vue({
                     total += Number(this.cards["secondCombat"][node].now);
                 }
             }
+
+            if ( page == 'minor'){
+                for (let card in this.cards[page]) {
+                    total += Number(this.cards[page][card].now);
+                    console.log(total);
+                }
+            }
             this.p[page].now = total;
         },
         updatePath(card, page){
@@ -1311,8 +1318,8 @@ var app = new Vue({
                 global.checkSkillValue(event.target.value, card);
                 if (page === "combat" || page === "crafting") {
                     global.updatePath(card, page);
-                    global.updateTotal(page);
                 }
+                global.updateTotal(page);
             }, 500);
             // maybe don't need parent anymore
         },
